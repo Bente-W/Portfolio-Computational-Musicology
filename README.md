@@ -10,7 +10,7 @@ In addition, Freddie did seem to enjoy Disco music. Thus, on his album Mr. Bad G
 However, since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting.
 
 ### Representation
-I have tried to make as complete a list as possible of the solo songs by Freddie Mercury. Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*).  I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury in comparison to songs by the band Queen.
+I have tried to make as complete a list as possible of the solo songs by Freddie Mercury (N = 25). Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*).  I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury in comparison to songs by the band Queen.
 Regarding the band, I have made a playlist with all albums going from 1973 till 1995. Each Queen song is remastered in 2011, while Spotify only states that *In My Defence* by Freddie Mercury is remixed in 2000. 
 
 ##### Song list 1.1: Special Editions
