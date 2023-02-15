@@ -24,4 +24,3 @@ Regarding the band, I have made a playlist with all albums going from 1973 till 
 - La japonaise	
 - Ensueño
 - Guide me home
-A line I wrote on my local computer
