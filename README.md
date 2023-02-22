@@ -35,7 +35,7 @@ Since Freddie Mercury was inspired by disco music when he released his solo trac
 
 *Note. The top represents high danceability, the bottom low danceability.*
 
-There is only one song by Freddie Mercury with 3 beats per measure, the remaining songs are in 4/4. Queen has 20 songs that deviate from the mode. There does not seem to be a clear correlation between tempo and danceability. It might be interesting to include more rhythm aspects into this comparison, such as duration. Also, energy and instruentalness might influence the danceability.
+There is only one song by Freddie Mercury with 3 beats per measure, the remaining songs are in 4/4. Queen has 20 songs that deviate from the mode. There does not seem to be a clear correlation between tempo and danceability. It might be interesting to include more rhythm aspects into this comparison, such as duration. Also, energy and instrumentalness might influence the danceability.
 
 Besides danceability, I was also curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have desided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peacefull).
 
