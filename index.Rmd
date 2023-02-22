@@ -1,27 +1,266 @@
 ---
-title: "Computational Musicology - Queen"
+title: "Computational Musicology"
+author: "Bente Westermann"
+date: 'februari 2023'
 output: 
   flexdashboard::flex_dashboard:
+    storyboard: true
     theme: default
 ---
 
-```{r setup, include=FALSE}
-library(flexdashboard)
-library(spotifyr)
+```{r, setup}
+# loading packages
 library(tidyverse)
+library(spotifyr)
+library(ggplot2)
+library(ggthemes)
+library(flexdashboard)
+library(plotly)
+### package by Ashley
 library(compmus)
+
+### note to self: 
+## 1. knit
+## 2. Git, Staged, check
+## 3. Commit with message
+## 4. push
 ```
 
-### Chart A
+### this is a tab
+
+If you just type text, this is text in the "graphic" part, but start with a picture if you can.
 
 ```{r}
-wood <-
-  get_tidy_audio_analysis("6IQILcYkN2S2eSu5IHoPEH") %>%
+# my tracks
+#TheGreatPretender <- get_track_audio_features("4xm2RpQtpFVlPlO1v4BrBr")
+#BohemianRhapsody <- get_track_audio_features("4u7EnebtmKWzUH433cf5Qv")
+
+# my playlists
+freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8')
+queen <- get_playlist_audio_features('', '3FOkKYT1wXXJH8L2lcSP5t')
+after <- get_playlist_audio_features('', '2Oou3UXp7fHZsHHxQ9jQnC')
+roger <- get_playlist_audio_features('', '7eYTx9OtJPrKBst4bWr3PD')
+
+Solo <- freddie %>% summarise(
+    mean_speechiness = mean(speechiness),
+    mean_acousticness = mean(acousticness),
+    mean_liveness = mean(liveness),
+    mean_mode = mean(mode),
+    mean_danceability = mean(danceability),
+    mean_energy = mean(energy),
+    mean_key = mean(key),
+    mean_valence = mean(valence),
+    mean_tempo = mean(tempo),
+    mean_pop = mean(track.popularity),
+    sd_speechiness = sd(speechiness),
+    sd_acousticness = sd(acousticness),
+    sd_liveness = sd(liveness),
+    sd_mode = sd(mode),
+    sd_danceability = sd(danceability),
+    sd_energy = sd(energy),
+    sd_key = sd(key),
+    sd_valence = sd(valence),
+    sd_tempo = sd(tempo),
+    sd_pop = sd(track.popularity),
+    median_speechiness = median(speechiness),
+    median_acousticness = median(acousticness),
+    median_liveness = median(liveness),
+    median_mode = median(mode),
+    median_danceability = median(danceability),
+    median_energy = median(energy),
+    median_key = median(key),
+    median_valence = median(valence),
+    median_tempo = median(tempo),
+    median_pop = median(track.popularity),
+    mad_speechiness = mad(speechiness),
+    mad_acousticness = mad(acousticness),
+    mad_liveness = mad(liveness),
+    mad_mode = mad(mode),
+    mad_danceability = mad(danceability),
+    mad_energy = mad(energy),
+    mad_key = mad(key),
+    mad_valence = mad(valence),
+    mad_tempo = mad(tempo),
+    mad_pop = mad(track.popularity)
+)
+Band <- queen %>% summarise(
+    mean_speechiness = mean(speechiness),
+    mean_acousticness = mean(acousticness),
+    mean_liveness = mean(liveness),
+    mean_mode = mean(mode),
+    mean_danceability = mean(danceability),
+    mean_energy = mean(energy),
+    mean_key = mean(key),
+    mean_valence = mean(valence),
+    mean_tempo = mean(tempo),
+    mean_pop = mean(track.popularity),
+    sd_speechiness = sd(speechiness),
+    sd_acousticness = sd(acousticness),
+    sd_liveness = sd(liveness),
+    sd_mode = sd(mode),
+    sd_danceability = sd(danceability),
+    sd_energy = sd(energy),
+    sd_key = sd(key),
+    sd_valence = sd(valence),
+    sd_tempo = sd(tempo),
+    sd_pop = sd(track.popularity),
+    median_speechiness = median(speechiness),
+    median_acousticness = median(acousticness),
+    median_liveness = median(liveness),
+    median_mode = median(mode),
+    median_danceability = median(danceability),
+    median_energy = median(energy),
+    median_key = median(key),
+    median_valence = median(valence),
+    median_tempo = median(tempo),
+    median_pop = median(track.popularity),
+    mad_speechiness = mad(speechiness),
+    mad_acousticness = mad(acousticness),
+    mad_liveness = mad(liveness),
+    mad_mode = mad(mode),
+    mad_danceability = mad(danceability),
+    mad_energy = mad(energy),
+    mad_key = mad(key),
+    mad_valence = mad(valence),
+    mad_tempo = mad(tempo),
+    mad_pop = mad(track.popularity)
+)
+Roger <- roger %>% summarise(
+    mean_speechiness = mean(speechiness),
+    mean_acousticness = mean(acousticness),
+    mean_liveness = mean(liveness),
+    mean_mode = mean(mode),
+    mean_danceability = mean(danceability),
+    mean_energy = mean(energy),
+    mean_key = mean(key),
+    mean_valence = mean(valence),
+    mean_tempo = mean(tempo),
+    mean_pop = mean(track.popularity),
+    sd_speechiness = sd(speechiness),
+    sd_acousticness = sd(acousticness),
+    sd_liveness = sd(liveness),
+    sd_mode = sd(mode),
+    sd_danceability = sd(danceability),
+    sd_energy = sd(energy),
+    sd_key = sd(key),
+    sd_valence = sd(valence),
+    sd_tempo = sd(tempo),
+    sd_pop = sd(track.popularity),
+    median_speechiness = median(speechiness),
+    median_acousticness = median(acousticness),
+    median_liveness = median(liveness),
+    median_mode = median(mode),
+    median_danceability = median(danceability),
+    median_energy = median(energy),
+    median_key = median(key),
+    median_valence = median(valence),
+    median_tempo = median(tempo),
+    median_pop = median(track.popularity),
+    mad_speechiness = mad(speechiness),
+    mad_acousticness = mad(acousticness),
+    mad_liveness = mad(liveness),
+    mad_mode = mad(mode),
+    mad_danceability = mad(danceability),
+    mad_energy = mad(energy),
+    mad_key = mad(key),
+    mad_valence = mad(valence),
+    mad_tempo = mad(tempo),
+    mad_pop = mad(track.popularity)
+)
+
+Comparison1 <-
+  bind_rows(
+    queen %>% mutate(category = "Band"),
+    freddie %>% mutate(category = "Solo"),
+    roger %>% mutate(category = "Roger")
+  )
+
+Comparison2 <-
+  bind_rows(
+    queen %>% mutate(category = "Band"),
+    freddie %>% mutate(category = "Solo"),
+    after %>% mutate(category = "After")
+  )
+
+Comparison3 <-
+  bind_rows(
+    queen %>% mutate(category = "Band"),
+    after %>% mutate(category = "After")
+  )
+
+SumComparison <- 
+    bind_rows(
+    Band %>% mutate(category = "Band"),
+    Solo %>% mutate(category = "Solo"),
+    Roger %>% mutate(category = "Roger")
+  )
+
+popQueen <- queen %>% 
+  arrange(desc(track.popularity)) %>%
+  slice(1:10)
+
+popFreddie <- freddie %>% 
+  arrange(desc(track.popularity)) %>%
+  slice(1:10)
+
+popRoger <- roger %>% 
+  arrange(desc(track.popularity)) %>%
+  slice(1:10)
+
+popComparison <-
+  bind_rows(
+    popQueen %>% mutate(category = "Band"),
+    popFreddie %>% mutate(category = "Solo"),
+    popRoger %>% mutate(category = "Roger")
+  )
+# creating a color blind friendly color palette
+cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", 
+"#CC79A7","#000000")
+gray <- gray.colors(5, start = 0, end = 1, gamma = 2.2, rev = TRUE)
+
+plot1 <- ggplot(Comparison2, aes(x = tempo, y = danceability, fill = category, color = as.factor(time_signature))) +
+  geom_point(shape = 21, size = 3.5, stroke = 1) +
+  labs(y = 'Danceability', x = 'Tempo', fill = 'Category', color = 'Beats per Measure') +
+  scale_fill_manual(values=alpha((cbbPalette), 0.6)) +
+  scale_color_manual(values=gray) +
+  scale_y_continuous(limits = c(0,1)) +
+  geom_label(label="Yeah - Queen", x=25, y=0.005, label.padding = unit(0.20, "lines"), color = "black", fill = "white") +
+  theme_minimal() +
+  theme(legend.position = c(0.15, 0.6), axis.text.y = element_blank())
+
+
+plot2 <- ggplot(data = Comparison2, aes(x = valence, y = energy, fill = category)) +
+  geom_point(shape = 21, size = 3, alpha = 0.6, stroke =0.5) +
+  labs(y = 'Energy', x = 'Valence', fill = 'Category') +
+  geom_vline(xintercept = 0.5) +
+  geom_hline(yintercept = 0.5) +
+  scale_x_continuous(expand = c(0, 0), limits = c(-0.1, 1.1)) +
+  scale_y_continuous(expand = c(0, 0), limits = c(-0.1, 1.1)) +
+  annotate('text', 0.25 / 4, 1.05, label = "Turbulent/Angry", fontface = "bold") +
+  annotate('text', 1-(0.25/4), 1.05, label = "Happy/Joyful", fontface = "bold") +
+  annotate('text', 1-(0.25/4), -0.05, label = "Chill/Peaceful", fontface = "bold") +
+  annotate('text', 0.25 / 4, -0.05, label = "Sad/Depressing", fontface = "bold") +
+  scale_fill_manual(values=cbbPalette) +
+  theme_minimal() +
+  theme(legend.position = c(0.76, 0.23), axis.text.x = element_blank(), axis.text.y = element_blank())
+
+plot2
+```
+
+***
+
+This is text for the description for the plot.
+
+### A new tab
+
+```{r}
+BohemianRhapsody <-
+  get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") %>%
   select(segments) %>%
   unnest(segments) %>%
   select(start, duration, pitches)
 
-wood %>%
+Euclidean <- BohemianRhapsody %>%
   mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
   compmus_gather_chroma() %>%
   ggplot(
@@ -36,22 +275,44 @@ wood %>%
   labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
+
+Mahattan <- BohemianRhapsody %>%
+  mutate(pitches = map(pitches, compmus_normalise, "manhattan")) %>%
+  compmus_gather_chroma() %>%
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+Chebyshev <- BohemianRhapsody %>%
+  mutate(pitches = map(pitches, compmus_normalise, "chebyshev")) %>%
+  compmus_gather_chroma() %>%
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+Chebyshev
+Euclidean
+Mahattan
 ```
 
-***
+*** 
 
-This is me trying
-
-
-### Chart B
-
-```{r}
-
-```
-
-### Chart C
-
-```{r}
-
-```
-
+Description.
