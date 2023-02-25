@@ -16,6 +16,9 @@ library(ggplot2)
 library(ggthemes)
 library(flexdashboard)
 library(plotly)
+library(DT)
+library(shiny)
+library(knitr)
 ### package by Ashley
 library(compmus)
 
@@ -60,13 +63,10 @@ Song list 1.2: New Orchestrated Editions
 <iframe src="https://open.spotify.com/embed/playlist/3FOkKYT1wXXJH8L2lcSP5t?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 <iframe src="https://open.spotify.com/embed/playlist/7IXPxFygCKwBEklOVopUu8?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
-### First plot {data-commentary-width=400}
+
+### First plot
 
 ```{r}
-# my tracks
-#TheGreatPretender <- get_track_audio_features("4xm2RpQtpFVlPlO1v4BrBr")
-#BohemianRhapsody <- get_track_audio_features("4u7EnebtmKWzUH433cf5Qv")
-
 # my playlists
 freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8')
 queen <- get_playlist_audio_features('', '3FOkKYT1wXXJH8L2lcSP5t')
@@ -276,7 +276,7 @@ plot2 <- ggplot(data = Comparison2, aes(x = valence, y = energy, fill = category
   theme_minimal() +
   theme(legend.position = c(0.76, 0.23), axis.text.x = element_blank(), axis.text.y = element_blank())
 
-plot2
+ggplotly(plot2)
 ```
 
 ***
@@ -284,36 +284,21 @@ Since Freddie Mercury was inspired by disco music when he released his solo trac
 
 There is only one song by Freddie Mercury with 3 beats per measure, the remaining songs are in 4/4. Queen has 20 songs that deviate from the mode. There does not seem to be a clear correlation between tempo and danceability. It might be interesting to include more rhythm aspects into this comparison, such as duration. Also, energy and instrumentalness might influence the danceability.
 
-Besides danceability, I was also curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have desided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peacefull).
+Besides danceability, I was also curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have decided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peaceful).
 
-There seem to be very few peacefull and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. 
+There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. 
 
-### This is a spectogram
 
-```{r}
-BohemianRhapsody <-
-  get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") %>%
+### This is a spectogram {data-commentary-width=800}
+
+```{r, out.extra='style="float:right"'}
+Pretender <-
+  get_tidy_audio_analysis("4xm2RpQtpFVlPlO1v4BrBr") %>%
   select(segments) %>%
   unnest(segments) %>%
   select(start, duration, pitches)
 
-Euclidean <- BohemianRhapsody %>%
-  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
-  compmus_gather_chroma() %>%
-  ggplot(
-    aes(
-      x = start + duration / 2,
-      width = duration,
-      y = pitch_class,
-      fill = value
-    )
-  ) +
-  geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
-  scale_fill_viridis_c()
-
-Mahattan <- BohemianRhapsody %>%
+Pretender <- Pretender %>%
   mutate(pitches = map(pitches, compmus_normalise, "manhattan")) %>%
   compmus_gather_chroma() %>%
   ggplot(
@@ -325,12 +310,18 @@ Mahattan <- BohemianRhapsody %>%
     )
   ) +
   geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(title = "The Great Pretender", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
 
-Chebyshev <- BohemianRhapsody %>%
-  mutate(pitches = map(pitches, compmus_normalise, "chebyshev")) %>%
+Stop <-
+  get_tidy_audio_analysis("5T8EDUDqKcs6OSOwEsfqG7") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+Stop <- Stop %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
   compmus_gather_chroma() %>%
   ggplot(
     aes(
@@ -341,15 +332,82 @@ Chebyshev <- BohemianRhapsody %>%
     )
   ) +
   geom_tile() +
-  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(title = "Don't Stop Me Now", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
 
-Chebyshev
-Euclidean
-Mahattan
+Ming <-
+  get_tidy_audio_analysis("1kcsmxEal6ZbVF2N0FAVeT") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+Ming <- Ming %>%
+  mutate(pitches = map(pitches, compmus_normalise, "manhattan")) %>%
+  compmus_gather_chroma() %>%
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(title = "Ming's Theme", x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+
+Pretender
 ```
 
 *** 
+```{r, out.extra='style="float:right; padding:10px"'}
+Stop
+```
 
-Description.
+I have plotted the spectograms of both Freddie Mercury as a solo artist and Queen the band. For the plot of Freddie Mercury as a solo artist I have chosen the song *The Great Pretender*, as it is the most popular according to Spotify. 
+
+For Queen, I think *Don't Stop Me Now* is a very representative song by the band Queen. It is very energetic, melodic and euphoric. It is also one of the most popular songs according to Spotify, along with *Bohemian Rhapsody* and *Another One Bites The Dust*.
+
+The spectogram shows that *Don't Stop Me Now* contains lots of pitch classes and is has thus very complex harmonies, while *The Great Pretender* seems to have a more simple harmony throughout the song. From Freddie Mercury's spectogram it becomes clear that the song *The Great Pretender* is in the key G major and modulates to G# major at around 2 minutes into the song.
+
+A very different song by Queen is *Ming's Theme*. It starts with low electronic sounds and later on 
+
+
+### Spectogram Made In Heaven
+
+```{r}
+SoloHeaven <-
+  get_tidy_audio_analysis("54duq94ybKaMCB5Fj2UciX") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+BandHeaven <-
+  get_tidy_audio_analysis("4NTMIFWtDXnWN4hDSBlKOf") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+compmus_long_distance(
+  SoloHeaven %>% mutate(pitches = map(pitches, compmus_normalise, "manhattan")),
+  BandHeaven %>% mutate(pitches = map(pitches, compmus_normalise, "manhattan")),
+  feature = pitches,
+  method = "manhattan"
+) %>%
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_equal() +
+  labs(x = "Freddie Mercury", y = "Queen after the death of Freddie Mercury") +
+  theme_minimal() +
+  scale_fill_viridis_c(guide = NULL)
+```
