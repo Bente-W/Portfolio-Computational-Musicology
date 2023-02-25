@@ -26,9 +26,41 @@ library(compmus)
 ## 4. push
 ```
 
-### this is a tab
+### Welcome to exploration of Queen {data-commentary-width=600}
 
-If you just type text, this is text in the "graphic" part, but start with a picture if you can.
+**Portfolio Computational Musicology**
+
+Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting in the backseat of the car, listening to my own CD with all the hits of the famous rock band. I could sing along to every song, even though I did not speak any English. The movie “Bohemian Rhapsody” portrayed (though not completely accurate) a small portion of the lives of the four band members. It reminded me of the solo careers three of the members had, only John Deacon never went solo. The drummer Roger Taylor was the first to release a solo album in 1981. After which Freddie Mercury and Brian May followed. When I heard “Time Waits For No One” for the first time not long ago, I thought it was just a Queen song I had not heard before. When I noticed that it was a song exclusively by Freddie Mercury, I wondered how it differed from songs produced by the band. Freddie Mercury has had less success as a solo artist than together with his three band members. 
+
+Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. 
+
+**Representation**
+
+I have tried to make as complete a list as possible of the solo songs by Freddie Mercury. Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*). I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury (N = 25) in comparison to songs by the band Queen (N = 159).
+Regarding the band, I have made a playlist with all albums going from 1973 till 1995. Each Queen song is remastered in 2011, while Spotify only states that *In My Defence* by Freddie Mercury is remixed in 2000. 
+
+In addition, I have created a small playlist (N = 13) with the songs that were released by the band after the death of Freddie Mercury so I can investigate how Freddie Mercury's death affected the band. This playlist contains one track called *Yeah* which is precisely what the title suggests: namely 4 seconds of Freddie Mercury singing "Yeah".
+
+Song list 1.1: Special Editions
+
+  - Foolin' Around
+  - Your Kind of Lover
+  - Mr. Bad Guy
+  - Man Made Paradise
+  - There Must Be More to Life Than This
+
+Song list 1.2: New Orchestrated Editions
+
+  - La Japonaise
+  - Ensueño
+  - Guide Me Home
+
+***
+
+<iframe src="https://open.spotify.com/embed/playlist/3FOkKYT1wXXJH8L2lcSP5t?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+<iframe src="https://open.spotify.com/embed/playlist/7IXPxFygCKwBEklOVopUu8?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+### First plot {data-commentary-width=400}
 
 ```{r}
 # my tracks
@@ -248,10 +280,15 @@ plot2
 ```
 
 ***
+Since Freddie Mercury was inspired by disco music when he released his solo tracks, I was curious whether there would be a difference in danceability between the band, Freddie Mercury as solo artist and after Freddie Mercury's death. I will also investigate whether it has changed after the solo career,  when Freddie Mercury was still the lead singer.
 
-This is text for the description for the plot.
+There is only one song by Freddie Mercury with 3 beats per measure, the remaining songs are in 4/4. Queen has 20 songs that deviate from the mode. There does not seem to be a clear correlation between tempo and danceability. It might be interesting to include more rhythm aspects into this comparison, such as duration. Also, energy and instrumentalness might influence the danceability.
 
-### A new tab
+Besides danceability, I was also curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have desided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peacefull).
+
+There seem to be very few peacefull and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. 
+
+### This is a spectogram
 
 ```{r}
 BohemianRhapsody <-
