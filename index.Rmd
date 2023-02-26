@@ -29,13 +29,20 @@ library(compmus)
 ## 4. push
 ```
 
-### Welcome to exploration of Queen {data-commentary-width=600}
+### It's a kind of magic - A comparison between Queen and Freddie Mercury {data-commentary-width=600}
 
 **Portfolio Computational Musicology**
 
-Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting in the backseat of the car, listening to my own CD with all the hits of the famous rock band. I could sing along to every song, even though I did not speak any English. The movie “Bohemian Rhapsody” portrayed (though not completely accurate) a small portion of the lives of the four band members. It reminded me of the solo careers three of the members had, only John Deacon never went solo. The drummer Roger Taylor was the first to release a solo album in 1981. After which Freddie Mercury and Brian May followed. When I heard “Time Waits For No One” for the first time not long ago, I thought it was just a Queen song I had not heard before. When I noticed that it was a song exclusively by Freddie Mercury, I wondered how it differed from songs produced by the band. Freddie Mercury has had less success as a solo artist than together with his three band members. 
+Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting in the backseat of the car, listening to my own CD with all the hits of the famous rock band. I could sing along to every song, even though I did not speak any English. The movie “Bohemian Rhapsody” portrayed (though not completely accurate) a small portion of the lives of the four band members. It reminded me of the solo careers three of the members had, only John Deacon never went solo. The drummer Roger Taylor was the first to release a solo album in 1981. After which Freddie Mercury and Brian May followed. When I heard the song *Time Waits For No One* for the first time not long ago, I thought it was just a Queen song I had not heard before. When I noticed that it was a song exclusively by Freddie Mercury, I wondered how it differed from songs produced by the band. Freddie Mercury has had less success as a solo artist than together with his three band members, what could have been the reason for this? 
 
-Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. 
+Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. I will also take a look at the solo songs by Roger Taylor as he was the first to go solo. At the end of my page, there will also be a small comparison between Queen with Freddie Mercury, and after the singer's death.
+
+**Expectations**
+
+Freddie Mercury has released an album together with opera singer Montserrat Caballé, thus a few songs are collaborations of the two artists from which the song *Barcelona* is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch. 
+In addition, Freddie did seem to enjoy Disco music. Thus, on his album Mr. Bad Guy there are a few songs that resemble his love for Disco such as *I Was Born to Love You*. Disco music is known for its great danceability. Therefore, the genre of disco music is characterised by a steady beat, often resulting in a 4/4 time signature. Yet, to add more interest and to give songs more energy, guitar basslines and drum hi-hats frequently contained syncopated rhythms. Disco music also uses a lot of different instruments and has repetitive vocals.
+
+However, since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting. Characteristics of the band Queen are the many melody variations and extensive harmonies, oftentimes created by lots of backing vocals, the complex guitar riffs and the high energy that the songs portray. Queen was a very experimental band and was not scared to deviate from the norm. This can be clearly heard in the song *Bohemian Rhapsody* which includes some operatic bits. In list 2.1 there are a few songs that stand out in the discography of Queen. In addition to these songs, the tracks from before *Killer Queen* sound less clear due to reverb on the vocals and guitar.
 
 **Representation**
 
@@ -43,6 +50,8 @@ I have tried to make as complete a list as possible of the solo songs by Freddie
 Regarding the band, I have made a playlist with all albums going from 1973 till 1995. Each Queen song is remastered in 2011, while Spotify only states that *In My Defence* by Freddie Mercury is remixed in 2000. 
 
 In addition, I have created a small playlist (N = 13) with the songs that were released by the band after the death of Freddie Mercury so I can investigate how Freddie Mercury's death affected the band. This playlist contains one track called *Yeah* which is precisely what the title suggests: namely 4 seconds of Freddie Mercury singing "Yeah".
+
+The playlist of songs by Roger Taylor consists of 44 songs from four different albums. 
 
 Song list 1.1: Special Editions
 
@@ -58,15 +67,23 @@ Song list 1.2: New Orchestrated Editions
   - Ensueño
   - Guide Me Home
 
+Song list 2.1
+
+  - Ming's Theme
+  - The Ring
+  - The Hitman
+  - Ogre Battle
+  - '39
+
 ***
 
 <iframe src="https://open.spotify.com/embed/playlist/3FOkKYT1wXXJH8L2lcSP5t?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 <iframe src="https://open.spotify.com/embed/playlist/7IXPxFygCKwBEklOVopUu8?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-### First plot
+### The danceability of the songs against the popularity, valence and instrumentalness {data-commentary-width=550}
 
-```{r}
+```{r, options(scipen=999)}
 # my playlists
 freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8')
 queen <- get_playlist_audio_features('', '3FOkKYT1wXXJH8L2lcSP5t')
@@ -202,21 +219,15 @@ Roger <- roger %>% summarise(
 
 Comparison1 <-
   bind_rows(
-    queen %>% mutate(category = "Band"),
-    freddie %>% mutate(category = "Solo"),
-    roger %>% mutate(category = "Roger")
+    queen %>% mutate(category = "Band (Queen)"),
+    freddie %>% mutate(category = "Freddie Mercury"),
+    roger %>% mutate(category = "Roger Taylor")
   )
 
 Comparison2 <-
   bind_rows(
     queen %>% mutate(category = "Band"),
     freddie %>% mutate(category = "Solo"),
-    after %>% mutate(category = "After")
-  )
-
-Comparison3 <-
-  bind_rows(
-    queen %>% mutate(category = "Band"),
     after %>% mutate(category = "After")
   )
 
@@ -227,24 +238,6 @@ SumComparison <-
     Roger %>% mutate(category = "Roger")
   )
 
-popQueen <- queen %>% 
-  arrange(desc(track.popularity)) %>%
-  slice(1:10)
-
-popFreddie <- freddie %>% 
-  arrange(desc(track.popularity)) %>%
-  slice(1:10)
-
-popRoger <- roger %>% 
-  arrange(desc(track.popularity)) %>%
-  slice(1:10)
-
-popComparison <-
-  bind_rows(
-    popQueen %>% mutate(category = "Band"),
-    popFreddie %>% mutate(category = "Solo"),
-    popRoger %>% mutate(category = "Roger")
-  )
 # creating a color blind friendly color palette
 cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", 
 "#CC79A7","#000000")
@@ -276,30 +269,47 @@ plot2 <- ggplot(data = Comparison2, aes(x = valence, y = energy, fill = category
   theme_minimal() +
   theme(legend.position = c(0.76, 0.23), axis.text.x = element_blank(), axis.text.y = element_blank())
 
-ggplotly(plot2)
+plot3 <- ggplot(Comparison1, aes(x = danceability, y = track.popularity, color = valence, size = instrumentalness)) +
+  geom_point(alpha = 0.6) +
+  scale_color_viridis_c() +
+  labs(title = "The Danceability of Songs by Queen and Members of the Band", x = "Danceability", y = "Track Popularity", size = "Instrumentalness", color = "Valence") +
+  facet_wrap(~category)
+
+ggplotly(plot3)
+
+Dust <- Comparison1 %>% filter(track.name == "Another One Bites The Dust - Remastered 2011")
+PopRoger <- Comparison1 %>% filter(track.name == "Man On Fire")
+Forever <- Comparison1 %>% filter(track.name == "Who Wants To Live Forever - Remastered 2011")
 ```
 
 ***
-Since Freddie Mercury was inspired by disco music when he released his solo tracks, I was curious whether there would be a difference in danceability between the band, Freddie Mercury as solo artist and after Freddie Mercury's death. I will also investigate whether it has changed after the solo career,  when Freddie Mercury was still the lead singer.
+**Popularity**
 
-There is only one song by Freddie Mercury with 3 beats per measure, the remaining songs are in 4/4. Queen has 20 songs that deviate from the mode. There does not seem to be a clear correlation between tempo and danceability. It might be interesting to include more rhythm aspects into this comparison, such as duration. Also, energy and instrumentalness might influence the danceability.
+From this plot, it becomes clear that Roger Taylor is far less popular than Queen and Freddie Mercury. The most popular song by Roger Taylor is *Man On Fire* and has a popularity of `r PopRoger$track.popularity`. The three most popular songs by Queen are *Bohemian Rhapsody*, *Another One Bites The Dust* and *Don't Stop Me Now* which all have a popularity of `r Dust$track.popularity`.
 
-Besides danceability, I was also curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have decided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peaceful).
+**Instrumentalness**
 
-There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. 
+As for instrumentalness, Spotify was not too precise since the song with the highest score was *Seven Seas of Rhye* which does have sung lyrics. The other songs at the top, though, are *The Ring (Hypnotic Seduction Of Dale)*, *Vultan's Theme (Attack Of The Hawk Men)* *God Save the Queen* and *Escape From The Swamp* which are all completely instrumental. Interestingly, these are all Queen songs. In the top 10 most instrumental songs, seven are from the album *Flash Gordon* which is an album made for the homonymous science fiction movie. It seems that the more instrumental a song is (the bigger the point), the less popular it is on Spotify. There is one exception to this rule: *Another One Bites the Dust* is one of the most popular songs by Queen but has an instrumentalness of `r Dust$instrumentalness`. 
+
+**Valence**
+
+The happiest song according to Spotify is *Misfire* by Queen. *Rain Must Fall* is following with only `r 0.001` points of difference. Both songs have a danceability score above the mean of `r Band$mean_danceability`. This seems to be fitting the norm; the happier a song is, the higher it rates on danceability. The lowest valence scores are from the songs *Ming's Theme* and *The Ring (Hypnotic Seduction Of Dale)* which also both are very instrumental. The next song with the lowest valence is a more typical song by the band, namely *Who Wants To Live Forever*. This song also has the lowest danceability score (`r Forever$danceability`).
 
 
-### This is a spectogram {data-commentary-width=800}
+### Comparing the spectrograms of *The Great Pretender* by Freddie Mercury and *Don't Stop Me Now* by Queen {data-commentary-width=825}
 
-```{r, out.extra='style="float:right"'}
-Pretender <-
-  get_tidy_audio_analysis("4xm2RpQtpFVlPlO1v4BrBr") %>%
+**Spectrogram**  
+The two spectrograms display a song by Freddie Mercury and a song by Queen. A spectrogram shows the the energy for every pitch class during a song. 
+
+```{r, fig.height=4.5, fig.width=5.5, fig.pos="b"}
+Born <-
+  get_tidy_audio_analysis("14FAtIQZsRYeu8zVI33l7f") %>%
   select(segments) %>%
   unnest(segments) %>%
   select(start, duration, pitches)
 
-Pretender <- Pretender %>%
-  mutate(pitches = map(pitches, compmus_normalise, "manhattan")) %>%
+Born <- Born %>%
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) %>%
   compmus_gather_chroma() %>%
   ggplot(
     aes(
@@ -310,7 +320,7 @@ Pretender <- Pretender %>%
     )
   ) +
   geom_tile() +
-  labs(title = "The Great Pretender", x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(title = "I Was Born To Love You - Freddie Mercury", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
 
@@ -332,7 +342,7 @@ Stop <- Stop %>%
     )
   ) +
   geom_tile() +
-  labs(title = "Don't Stop Me Now", x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(title = "Don't Stop Me Now - Queen", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
 
@@ -354,28 +364,44 @@ Ming <- Ming %>%
     )
   ) +
   geom_tile() +
-  labs(title = "Ming's Theme", x = "Time (s)", y = NULL, fill = "Magnitude") +
+  labs(title = "Ming's Theme - Queen", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
   scale_fill_viridis_c()
 
-Pretender
+Born
 ```
 
 *** 
-```{r, out.extra='style="float:right; padding:10px"'}
+**Freddie Mercury**  
+For Freddie Mercury as a solo artist I have chosen the song *I Was Born To Love You*, as it is the most popular song according to Spotify. I also think it is quite representative for Freddie Mercury, as it has a disco feeling and is very uptempo. The song *The Great Pretender* is equally popular, but originally not a song by Freddie Mercury.
+
+```{r, fig.height=4.5, fig.width=5.5, out.extra='style="float:right; padding:12px"'}
 Stop
 ```
+**Queen**  
+For Queen, I think *Don't Stop Me Now* is a very representative song. It is very energetic, melodic and euphoric. It is also one of the most popular songs according to Spotify, along with *Bohemian Rhapsody* and *Another One Bites The Dust*.
 
-I have plotted the spectograms of both Freddie Mercury as a solo artist and Queen the band. For the plot of Freddie Mercury as a solo artist I have chosen the song *The Great Pretender*, as it is the most popular according to Spotify. 
+**Comparison**  
+The spectrogram shows that *Don't Stop Me Now* contains lots of pitch classes and it has thus very complex harmonies, while *I Was Born To Love You* seems to have a bit more of distinct pitch classes with high energy. The highest energy can be found in the class of G sharp, this is also the key of the song. For *Don't Stop Me Now* it is harder to see the key, but the pitch class F seems to have a slightly bigger magnitude than the other pitch classes. This songs is in the key of F major. On the next page you can see the spectrogram of the song *Ming's Theme*.
 
-For Queen, I think *Don't Stop Me Now* is a very representative song by the band Queen. It is very energetic, melodic and euphoric. It is also one of the most popular songs according to Spotify, along with *Bohemian Rhapsody* and *Another One Bites The Dust*.
+### Spectrogram of a very atypical song by Queen, *Ming's Theme* {data-commentary-width=550}
 
-The spectogram shows that *Don't Stop Me Now* contains lots of pitch classes and is has thus very complex harmonies, while *The Great Pretender* seems to have a more simple harmony throughout the song. From Freddie Mercury's spectogram it becomes clear that the song *The Great Pretender* is in the key G major and modulates to G# major at around 2 minutes into the song.
+```{r}
+Ming
+```
 
-A very different song by Queen is *Ming's Theme*. It starts with low electronic sounds and later on 
+***
+**Explanation**
 
+A very different song by Queen is *Ming's Theme (In The Court Of Ming The Merciless)*. This song is part of the album that was made specifically for the movie *Flash Gordon*. It starts with low pitched electronic sounds and later on includes people talking. In the spectrogram you can see how the song starts on a note that is somewhere around F sharp. There are two descending melodies leading to a note between C and C sharp. After this, the talking starts with the same note softly sounding in the background. Around two minutes into the song there is another descending melody. The melodic part ends with a perfect fifth (D and A). The song concludes with a dialogue from the movie.
 
-### Spectogram Made In Heaven
+**Comparison**
+
+In the spectrogram of *Don't Stop Me Now* on the previous page, this explicit distinction of notes and sections could not be made. Even the key was not very clear.
+
+<iframe src="https://open.spotify.com/embed/playlist/1jqc3j3k6VXu5RykFegI5x?utm_source=generator" width="100%" height="200" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+### Spectrogram Made In Heaven
 
 ```{r}
 SoloHeaven <-
@@ -411,3 +437,15 @@ compmus_long_distance(
   theme_minimal() +
   scale_fill_viridis_c(guide = NULL)
 ```
+
+
+### Plot of danceability and Emotion
+
+```{r}
+ggplotly(plot2)
+```
+***
+
+I was curious about the emotion every song portrays. Specially after Freddie Mercury's death, I could see songs portraying more of a sad emotion. Since emotion is very complex, I have decided to simplify this by plotting the valence (positive and negative) against the arousal (for which I have selected high and low energy). This way, the songs are plotted on the 2D valence-arousal model of Emotion in which each quadrant stands for a different type of basic emotion (angry, happy, sad, peaceful).
+
+There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. 
