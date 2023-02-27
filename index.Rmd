@@ -88,7 +88,10 @@ Song list 2.1
 
 ### The most popular songs are danceable, happy and have sung lyrics. {data-commentary-width=682}
 
-```{r, options(scipen=999)}
+```{r}
+options(scipen=999)
+options(digits = 3)
+
 # my playlists
 logo <- list.files("/Users/gebruiker/Documents/Studies/CLC/Jaar 2 2022-2023/Computational Musicology/Portfolio-Comp-Musicology", pattern = ".png", full.names = TRUE)
 freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8') %>%
@@ -259,6 +262,7 @@ Comparison1 <-
     freddie %>% mutate(category = "Freddie Mercury"),
     roger %>% mutate(category = "Roger Taylor")
   )
+Comparison1 <- Comparison1 %>% rename(popularity = track.popularity, track = track.name)
 
 Comparison2 <-
   bind_rows(
@@ -267,6 +271,7 @@ Comparison2 <-
     after %>% mutate(category = "After the death"),
     roger %>% mutate(category = "Roger Taylor")
   )
+Comparison2 <- Comparison2 %>% rename(popularity = track.popularity, track = track.name)
 
 SumComparison <- 
     bind_rows(
@@ -292,7 +297,7 @@ plot1 <- ggplot(Comparison2, aes(x = tempo, y = danceability, fill = category, c
   theme_minimal() +
   theme(legend.position = c(0.15, 0.6), axis.text.y = element_blank())
 
-plot3 <- ggplot(Comparison1, aes(x = danceability, y = track.popularity, color = valence, size = instrumentalness, key = track.name)) +
+plot3 <- ggplot(Comparison1, aes(x = danceability, y = popularity, color = valence, size = instrumentalness, key = track)) +
   geom_point(alpha = 0.6) +
   scale_color_viridis_c() +
   labs(title = "The Danceability of Songs by Queen and Members of the Band", x = "Danceability", y = "Track Popularity", size = "Instrumentalness", color = "Valence") +
@@ -302,14 +307,14 @@ plot3 <- ggplot(Comparison1, aes(x = danceability, y = track.popularity, color =
 
 ggplotly(plot3, source = "select", tooltip = c("key", "x", "y", "color", "size"))
 
-Dust <- Comparison1 %>% filter(track.name == "Another One Bites The Dust - Remastered 2011")
-PopRoger <- Comparison1 %>% filter(track.name == "Man On Fire")
-Forever <- Comparison1 %>% filter(track.name == "Who Wants To Live Forever - Remastered 2011")
+Dust <- Comparison1 %>% filter(track == "Another One Bites The Dust - Remastered 2011")
+PopRoger <- Comparison1 %>% filter(track == "Man On Fire")
+Forever <- Comparison1 %>% filter(track == "Who Wants To Live Forever - Remastered 2011")
 ```
 
 ***
 **Popularity**  
-The first thing that stands out is that Roger Taylor is far less popular than Queen and Freddie Mercury. The most popular song by Roger Taylor is *Man On Fire* and has a popularity of `r PopRoger$track.popularity`. The three most popular songs by Queen are *Bohemian Rhapsody*, *Another One Bites The Dust* and *Don't Stop Me Now* which all have a popularity of `r Dust$track.popularity`. Danceability and popularity seem to be correlated in Queen and Roger Taylor songs; the more danceable songs are also more popular. Within the songs of Freddie Mercury this pattern can not be found.
+The first thing that stands out is that Roger Taylor is far less popular than Queen and Freddie Mercury. The most popular song by Roger Taylor is *Man On Fire* and has a popularity of `r PopRoger$popularity`. The three most popular songs by Queen are *Bohemian Rhapsody*, *Another One Bites The Dust* and *Don't Stop Me Now* which all have a popularity of `r Dust$popularity`. Danceability and popularity seem to be correlated in Queen and Roger Taylor songs; the more danceable songs are also more popular. Within the songs of Freddie Mercury this pattern can not be found.
 
 **Instrumentalness**  
 As for instrumentalness, Spotify was not too precise, since the song with the highest score was *Seven Seas of Rhye* which does have sung lyrics. The other songs at the top, though, are *The Ring*, *Vultan's Theme*, *God Save the Queen* and *Escape From The Swamp* which are all completely instrumental. In the top 10 most instrumental songs, seven are from the album *Flash Gordon* which is an album made for the homonymous science fiction movie. It seems that the more instrumental a song is, the less popular it is on Spotify. There is one exception to this rule: *Another One Bites the Dust* is one of the most popular songs by Queen but has an instrumentalness of `r Dust$instrumentalness`. 
@@ -426,11 +431,11 @@ The spectrogram shows that *Don't Stop Me Now* contains lots of pitch classes an
 ### After Freddie Mercury's death, the sadness could be felt in the songs by Queen. {data-commentary-width=500}
 
 ```{r}
-plot2 <- ggplot(data = Comparison2, aes(x = valence, y = energy, color = category, key = track.name)) +
+plot2 <- ggplot(data = Comparison2) +
   geom_vline(xintercept = 0.5) +
   geom_hline(yintercept = 0.5) +
-  geom_point(size = 3, alpha = 0.7) +
-  labs(y = 'Energy', x = 'Valence', color = 'Category', key = 'Track name') +
+  geom_point(aes(x = valence, y = energy, color = category, key = track), size = 3, alpha = 0.7) +
+  labs(y = 'Energy', x = 'Valence', color = 'Category') +
   scale_x_continuous(expand = c(0, 0), limits = c(-0.1, 1.1)) +
   scale_y_continuous(expand = c(0, 0), limits = c(-0.1, 1.1)) +
   annotate('text', 0.25 / 4, 1.05, label = "Turbulent/Angry", fontface = "bold") +
