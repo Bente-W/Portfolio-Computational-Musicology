@@ -92,7 +92,7 @@ Song list 2.1
 
 <iframe src="https://open.spotify.com/embed/playlist/7IXPxFygCKwBEklOVopUu8?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-### The most popular songs are danceable, happy and have sung lyrics. {data-commentary-width=500}
+### The most popular songs are danceable, happy and have sung lyrics. {data-commentary-width=600}
 
 ```{r}
 options(scipen=999)
@@ -328,7 +328,7 @@ As for instrumentalness, Spotify was not too precise, since the song with the hi
 **Valence**  
 The happiest song according to Spotify is *Misfire* by Queen. *Rain Must Fall* is following with only `r 0.001` points in difference. Both songs have a danceability score above the mean of `r Band$mean_danceability`. This seems to be fitting the norm; the happier a song is, the higher it rates on danceability. The lowest valence scores are from the songs *Ming's Theme* and *The Ring (Hypnotic Seduction Of Dale)* which also both are very instrumental. The next song with the lowest valence is a more typical song by the band, namely *Who Wants To Live Forever*. This song also has the lowest danceability score (`r Forever$danceability`).
 
-### Chromagram of a very atypical song by Queen (*Ming's Theme*) shows simplicity. {data-commentary-width=682}
+### Chromagram of a very atypical song by Queen (*Ming's Theme*) shows simplicity. {data-commentary-width=600}
 
 ```{r}
 Born <-
@@ -433,13 +433,11 @@ Born
 For Freddie Mercury as a solo artist I have chosen the song *I Was Born To Love You*, as it is the most popular song according to Spotify. I also think it is quite representative for Freddie Mercury, as it has a disco feeling and is very lively. The song *The Great Pretender* is equally popular, but is a song originally by The Platters and written by Buck Ram (the manager).  
 I have also plotted *The Great Pretender* as a chromagram (can be seen on this page) and interestingly this was much more readable than original Queen and Freddie Mercury songs, just like *Ming's Theme*. In the chromagram you can clearly see that the song is in G major and modulates at around 2 minutes to G sharp major.
 
-`r valueBox(42, icon = "fa-pencil", href="###details")`
-
 **Comparison**  
 The chromagram shows that *Don't Stop Me Now* contains lots of pitch classes and it has thus very complex harmonies, while *I Was Born To Love You* seems to have a bit more of distinct pitch classes with high energy. The highest energy can be found in the class of G sharp, this is also the key of the song. For *Don't Stop Me Now* it is harder to see the key, but the pitch class F seems to have a slightly bigger magnitude than the other pitch classes. This songs is in the key of F major.
 
-### Queen songs tend to deviate from the clear structure used in popular music, unless Roger Taylor writes the song. {data-commentary-width=500}
-```{r}
+### Queen songs tend to deviate from the clear structure used in popular music, unless Roger Taylor writes the song. {data-commentary-width=450}
+```{r, dpi=800}
 ### different song
 rhapsody <-
   get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") |> # Change URI.
@@ -540,10 +538,10 @@ grid.arrange(CarPlot, RhapsodyPlot, ncol = 1)
 **Self-similarity matrices**  
 These are four self-similarity matrices, with the axes in seconds, that show the pitch- and timbre-based self-similarity for every bar. At the top you can see a song that is written and sung by the drummer Roger Taylor but released as a Queen song. On the bottom the song Bohemian Rhapsody, written by Freddie Mercury, can be seen. The song written by Roger Taylor seems to have much more of a uniform structure than *Bohemian Rhapsody*, which can be derived from the checkerboard pattern.
 
-**I'm in Love With My Car**  
+**Explanation**  
 The song starts with a guitar riff accompanied with repeating D chords on the piano, followed by verse 1 that makes use of four different chords that are repeated after one another. After 60 seconds, the chorus starts in which Freddie Mercury sings backing vocals. There is a slight change in color in the timbre-based matrix, but I expected to see a greater change. The chords stay the same, thus the transition from verse 1 to the chorus is not really visible in the chroma-based matrix. At around 1:20 minutes (80 seconds) into the song, the chords change. This can be clearly seen in the chroma-based matrix, but is less apparent in the timbre-based one. That the guitar riff and accompanying piano chords recur after this short change becomes evident from both matrices. Then there is another verse that follows the same structure as verse 1, but does include guitar riffs in the background. The two matrices pick up the repetition in the second chorus very well, resulting in diagonal lines at around 2:10 minutes (130 seconds). They play once again some guitar riffs accompanied by the repeating chords on the piano that slowly fade out with car noises sounding on top of that. The song ends with some chords on the guitar that sound very different (which explains the bright yellow line at the end of the timbre-based matrix) and car noises.
 
-### Songs by Freddie Mercury as a solo artist also have a clearer structure.
+### Songs by Freddie Mercury as a solo artist also have a clearer structure. {data-commentary-width=450}
 
 ```{r}
 livingown <-
@@ -595,9 +593,13 @@ LivingPlot
 ```
 
 ***
+**Comparison**  
 As I explained in the introduction, Queen is known for their experimentation and deviation from the norm. On the previous tab this could be seen in the matrices of the song *Bohemian Rhapsody*, since there there was a lack of a clear structure. The song that was written by Roger Taylor had much more of a structure, as is the case with a very typical song by Freddie Mercury as a solo artist. On this page you can see the timbre- and pitch-based self-similarity matrices of the song *Living on My Own*. The song is in my view a classic Freddie Mercury song, that features Freddie's distinctive voice, flamboyant personality, and his love for dance music. The song's upbeat tempo, catchy melody, and electronic production are all hallmarks of Freddie's solo work. Additionally, the song features a memorable chorus, which is typical of Freddie's ability to write catchy songs.
 
-### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury. A legend he is and here is why. {data-commentary-width=400}
+**Freddie Mercury**  
+The chroma-based matrix illustrates nicely through the diagonal lines that there are lots of repetitions in the song. The songs starts with A minor chords and when the next chord is introduced, there is a yellow line in the chroma-based matrix (at around 25 seconds). At around 50 seconds, the chorus is introduced. In the same matrix it becomes clear that the chorus repeats after another 35 seconds (approximately 85 seconds into the song). Next there is a break with some scatting and improvisation on the piano, followed by halve of the chorus. The beat that is used throughout the whole song accompanied by piano chords and some occasional scatting are utilized as an outro. Though the true ending is the artificial repetition of one ad lib by Freddie Mercury.
+
+### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury. A legend he is and here is why. {data-commentary-width=450}
 
 `r knitr::include_graphics(logo)`
 
