@@ -16,7 +16,7 @@ output:
         google: Sen
 ---
 
-```{r, setup}
+```{r, setup, echo=FALSE}
 # loading packages
 library(tidyverse)
 library(spotifyr)
@@ -27,6 +27,8 @@ library(plotly)
 library(DT)
 library(shiny)
 library(knitr)
+library(grid)
+library(gridExtra)
 ### package by Ashley
 library(compmus)
 
@@ -35,6 +37,9 @@ library(compmus)
 ## 2. Git, Staged, check
 ## 3. Commit with message
 ## 4. push
+### ceptrogram
+## can tell you how many timbre types there are, whether there is switching between timbres etc.
+## beats are useful when the percussion is very clear, otherwise bars are great
 ```
 
 ### "The reason we're successful, darling? My overall charisma, of course." - Freddie Mercury. But was it really? {data-commentary-width=600}
@@ -42,13 +47,14 @@ library(compmus)
 **Portfolio Computational Musicology**  
 Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting in the backseat of the car, listening to my own CD with all the hits of the famous rock band. I could sing along to every song, even though I did not speak any English. The movie “Bohemian Rhapsody” portrayed (though not completely accurate) a small portion of the lives of the four band members. It reminded me of the solo careers three of the members had, only John Deacon never went solo. The drummer Roger Taylor was the first to release a solo album in 1981. After which Freddie Mercury and Brian May followed. When I heard the song *Time Waits For No One* for the first time not long ago, I thought it was just a Queen song I had not heard before. When I noticed that it was a song exclusively by Freddie Mercury, I wondered how it differed from songs produced by the band. Freddie Mercury has had less success as a solo artist than together with his three band members, what could have been the reason for this? 
 
-Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. I will also take a look at the solo songs by Roger Taylor as he was the first to go solo. At the end of my page, there will also be a small comparison between Queen with Freddie Mercury, and after the singer's death.
+Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. I will also take a look at the solo songs by Roger Taylor as he was the first to go solo. At the end of my page, there will also be a small comparison between Queen with Freddie Mercury as lead singer, and after the singer's death.
 
-**Expectations**  
-Freddie Mercury has released an album together with opera singer Montserrat Caballé, thus a few songs are collaborations of the two artists from which the song *Barcelona* is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch. 
-In addition, Freddie did seem to enjoy Disco music. Thus, on his album Mr. Bad Guy there are a few songs that resemble his love for Disco such as *I Was Born to Love You*. Disco music is known for its great danceability. Therefore, the genre of disco music is characterised by a steady beat, often resulting in a 4/4 time signature. Yet, to add more interest and to give songs more energy, guitar basslines and drum hi-hats frequently contained syncopated rhythms. Disco music also uses a lot of different instruments and has repetitive vocals.
+**Expectations** 
+The band Queen is known for their grandiosity and experimentation. They were not afraid to deviate from the norm and tried to mix all kinds of genres together in their songs including rock, pop, metal, opera and electronic music. It is therefore very difficult to pinpoint the characteristics of Queen and to select typical songs. However, many songs seem to be theatrical or dramatic featuring intricate arrangements and harmonies, the lyrics have a message and explore complex themes, and the songs are pushing boundaries of rock music. These qualities can be clearly heard in what may be the most famous Queen song *Bohemian Rhapsody*, which includes the complex harmonies and shifts between different genres such as rock, pop and opera. It beautifully displays Freddie Mercury's impressive range and theatrical feeling.
 
-However, since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting. Characteristics of the band Queen are the many melody variations and extensive harmonies, oftentimes created by lots of backing vocals, the complex guitar riffs and the high energy that the songs portray. Queen was a very experimental band and was not scared to deviate from the norm. This can be clearly heard in the song *Bohemian Rhapsody* which includes some operatic bits.
+Needless to say, these iconic vocals can also be heard in the solo songs released by Freddie Mercury. He did seem to enjoy Disco music more than the other band members. Disco music is known for its great danceability. Therefore, the genre of disco music is characterized by a strong and steady beat, often resulting in a 4/4 time signature. To add more interest and to give songs more energy, guitar bass lines and drum hi-hats frequently contained syncopated rhythms. Disco music also uses a lot of different instruments and has repetitive but funky and soulful vocals. The classic disco beat can be heard for example in the songs *Love Kills*, *Living on My Own* and *I Was Born to Love You* on his album Mr. Bad Guy. *Your Kind of Lover* from the same album also includes a typical disco bassline.  
+In addition to disco, opera is also a common genre in the songs released by Freddie Mercury. Together with opera singer Montserrat Caballé he has brought out an album, from which the song with the same name as the album, *Barcelona*, is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch.  
+Since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting such as catchy hooks and melodies, but I also anticipate Queen having more complex and grandiose songs while Freddie Mercury will probably be more stripped down and focused on vocals, piano and danceability.
 
 **Representation**  
 I have tried to make as complete a list as possible of the solo songs by Freddie Mercury. Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*). I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury (N = 25) in comparison to songs by the band Queen (N = 159).
@@ -86,7 +92,7 @@ Song list 2.1
 
 <iframe src="https://open.spotify.com/embed/playlist/7IXPxFygCKwBEklOVopUu8?utm_source=generator" width="50%" height="100%" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-### The most popular songs are danceable, happy and have sung lyrics. {data-commentary-width=682}
+### The most popular songs are danceable, happy and have sung lyrics. {data-commentary-width=500}
 
 ```{r}
 options(scipen=999)
@@ -322,7 +328,7 @@ As for instrumentalness, Spotify was not too precise, since the song with the hi
 **Valence**  
 The happiest song according to Spotify is *Misfire* by Queen. *Rain Must Fall* is following with only `r 0.001` points in difference. Both songs have a danceability score above the mean of `r Band$mean_danceability`. This seems to be fitting the norm; the happier a song is, the higher it rates on danceability. The lowest valence scores are from the songs *Ming's Theme* and *The Ring (Hypnotic Seduction Of Dale)* which also both are very instrumental. The next song with the lowest valence is a more typical song by the band, namely *Who Wants To Live Forever*. This song also has the lowest danceability score (`r Forever$danceability`).
 
-### Spectrogram of a very atypical song by Queen (*Ming's Theme*) shows simplicity. {data-commentary-width=682}
+### Chromagram of a very atypical song by Queen (*Ming's Theme*) shows simplicity. {data-commentary-width=682}
 
 ```{r}
 Born <-
@@ -345,6 +351,7 @@ Born <- Born %>%
   geom_tile() +
   labs(title = "I Was Born To Love You - Freddie Mercury", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
+  theme(plot.title = element_text(size = 16)) +
   scale_fill_viridis_c()
 
 Stop <-
@@ -367,6 +374,7 @@ Stop <- Stop %>%
   geom_tile() +
   labs(title = "Don't Stop Me Now - Queen", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
+  theme(plot.title = element_text(size = 16)) +
   scale_fill_viridis_c()
 
 Ming <-
@@ -389,44 +397,217 @@ Ming <- Ming %>%
   geom_tile() +
   labs(title = "Ming's Theme - Queen", x = "Time (s)", y = NULL, fill = "Magnitude") +
   theme_minimal() +
+  theme(plot.title = element_text(size = 16)) +
   scale_fill_viridis_c()
 
 Ming
 ```
 
 ***
-**Spectrogram**  
-I have created three spectograms to show the difference between a simple and atypical Queen song and complex Queen and Freddie Mercury songs that are very representative for their style. A spectrogram shows the the energy for every pitch class during a song. 
+**Chromagram**  
+I have created three chromagrams to show the difference between a simple and atypical Queen song and complex Queen and Freddie Mercury songs that are very representative for their style. A chromagram shows the the energy for every pitch class during a song. 
 
 **Explanation**  
-A very atypical song by Queen is *Ming's Theme (In The Court Of Ming The Merciless)*. This song is part of the album that was made specifically for the movie *Flash Gordon*. It starts with low pitched electronic sounds and later on includes people talking. In the spectrogram you can see how the song starts on a note that is somewhere around F sharp. There are two descending melodies leading to a note between C and C sharp. After this, the talking starts with the same note softly sounding in the background. Around two minutes into the song there is another descending melody. The melodic part ends with a perfect fifth (D and A). The song concludes with a dialogue from the movie.
+A very atypical song by Queen is *Ming's Theme (In The Court Of Ming The Merciless)*. This song is part of the album that was made specifically for the movie *Flash Gordon*. It starts with low pitched electronic sounds and later on includes people talking. In the chromagram you can see how the song starts on a note that is somewhere around F sharp. There are two descending melodies leading to a note between C and C sharp. After this, the talking starts with the same note softly sounding in the background. Around two minutes into the song there is another descending melody. The melodic part ends with a perfect fifth (D and A). The song concludes with a dialogue from the movie.
 
 **Comparison**  
-On the next page the spectrogram of *Don't Stop Me Now* and *I Was Born To Love You* can be seen. You will see that this clear distinction of notes and sections can not be made in a more typical Queen song, also in a Freddie Mercury song this is much harder. Even the key can not be easily identified.
+On the next page the chromagram of *Don't Stop Me Now* and *I Was Born To Love You* can be seen. You will see that this clear distinction of notes and sections can not be made in a more typical Queen song, also in a Freddie Mercury song this is much harder. Even the key can not be easily identified.
 
 <iframe src="https://open.spotify.com/embed/playlist/1jqc3j3k6VXu5RykFegI5x?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
 ### Typical Queen and Freddie Mercury songs, however, are far from simple. {data-commentary-width=750}
-
-**Queen**  
-For Queen, I think *Don't Stop Me Now* is a very representative song. It is very energetic, melodic and euphoric. It is also one of the most popular songs according to Spotify, along with *Bohemian Rhapsody* and *Another One Bites The Dust*.
 
 ```{r, fig.height=4, fig.width=5}
 Stop
 ```
 
 *** 
-**Freddie Mercury**  
-For Freddie Mercury as a solo artist I have chosen the song *I Was Born To Love You*, as it is the most popular song according to Spotify. I also think it is quite representative for Freddie Mercury, as it has a disco feeling and is very lively. The song *The Great Pretender* is equally popular, but is a song originally by The Platters and written by Buck Ram (the manager).
+**Queen**  
+For Queen, I think *Don't Stop Me Now* is a very representative song. It is very energetic, melodic and euphoric. It is also one of the most popular songs according to Spotify, along with *Bohemian Rhapsody* and *Another One Bites The Dust*.
+
 
 ```{r, fig.height=4.5, fig.width=5.5, out.extra='style="float:right; padding:10px"'}
 Born
 ```
+**Freddie Mercury**  
+For Freddie Mercury as a solo artist I have chosen the song *I Was Born To Love You*, as it is the most popular song according to Spotify. I also think it is quite representative for Freddie Mercury, as it has a disco feeling and is very lively. The song *The Great Pretender* is equally popular, but is a song originally by The Platters and written by Buck Ram (the manager).  
+I have also plotted *The Great Pretender* as a chromagram (can be seen on this page) and interestingly this was much more readable than original Queen and Freddie Mercury songs, just like *Ming's Theme*. In the chromagram you can clearly see that the song is in G major and modulates at around 2 minutes to G sharp major.
 
-I have also plotted *The Great Pretender* as a spectrogram (can be seen on the last page) and interestingly this was much more readable than original Queen and Freddie Mercury songs, just like *Ming's Theme*. In the spectrogram you can clearly see that the song is in G major and modulates at around 2 minutes to G sharp major.
+`r valueBox(42, icon = "fa-pencil", href="###details")`
 
 **Comparison**  
-The spectrogram shows that *Don't Stop Me Now* contains lots of pitch classes and it has thus very complex harmonies, while *I Was Born To Love You* seems to have a bit more of distinct pitch classes with high energy. The highest energy can be found in the class of G sharp, this is also the key of the song. For *Don't Stop Me Now* it is harder to see the key, but the pitch class F seems to have a slightly bigger magnitude than the other pitch classes. This songs is in the key of F major.
+The chromagram shows that *Don't Stop Me Now* contains lots of pitch classes and it has thus very complex harmonies, while *I Was Born To Love You* seems to have a bit more of distinct pitch classes with high energy. The highest energy can be found in the class of G sharp, this is also the key of the song. For *Don't Stop Me Now* it is harder to see the key, but the pitch class F seems to have a slightly bigger magnitude than the other pitch classes. This songs is in the key of F major.
+
+### Queen songs tend to deviate from the clear structure used in popular music, unless Roger Taylor writes the song. {data-commentary-width=500}
+```{r}
+### different song
+rhapsody <-
+  get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+car <-
+  get_tidy_audio_analysis("253ewjP2R1LjKqA70mGdnk") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+CarPlot <- bind_rows(
+  car |> 
+    compmus_self_similarity(pitches, "euclidean") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  car |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 11)) +
+  labs(x = "", y = "", subtitle = "I'm in Love With My Car")
+
+RhapsodyPlot <- bind_rows(
+  rhapsody |> 
+    compmus_self_similarity(pitches, "euclidean") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  rhapsody |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "", y = "", subtitle = "Bohemian Rhapsody") +
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 11))
+
+grid.arrange(CarPlot, RhapsodyPlot, ncol = 1)
+```
+
+***
+**Self-similarity matrices**  
+These are four self-similarity matrices, with the axes in seconds, that show the pitch- and timbre-based self-similarity for every bar. At the top you can see a song that is written and sung by the drummer Roger Taylor but released as a Queen song. On the bottom the song Bohemian Rhapsody, written by Freddie Mercury, can be seen. The song written by Roger Taylor seems to have much more of a uniform structure than *Bohemian Rhapsody*, which can be derived from the checkerboard pattern.
+
+**I'm in Love With My Car**  
+The song starts with a guitar riff accompanied with repeating D chords on the piano, followed by verse 1 that makes use of four different chords that are repeated after one another. After 60 seconds, the chorus starts in which Freddie Mercury sings backing vocals. There is a slight change in color in the timbre-based matrix, but I expected to see a greater change. The chords stay the same, thus the transition from verse 1 to the chorus is not really visible in the chroma-based matrix. At around 1:20 minutes (80 seconds) into the song, the chords change. This can be clearly seen in the chroma-based matrix, but is less apparent in the timbre-based one. That the guitar riff and accompanying piano chords recur after this short change becomes evident from both matrices. Then there is another verse that follows the same structure as verse 1, but does include guitar riffs in the background. The two matrices pick up the repetition in the second chorus very well, resulting in diagonal lines at around 2:10 minutes (130 seconds). They play once again some guitar riffs accompanied by the repeating chords on the piano that slowly fade out with car noises sounding on top of that. The song ends with some chords on the guitar that sound very different (which explains the bright yellow line at the end of the timbre-based matrix) and car noises.
+
+### Songs by Freddie Mercury as a solo artist also have a clearer structure.
+
+```{r}
+livingown <-
+  get_tidy_audio_analysis("5EyrSES4OYcUxpZdhO1MQj") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+LivingPlot <- bind_rows(
+  livingown |> 
+    compmus_self_similarity(pitches, "euclidean") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  livingown |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 11)) +
+  labs(x = "", y = "", title = "Living on My Own")
+LivingPlot
+```
+
+***
+As I explained in the introduction, Queen is known for their experimentation and deviation from the norm. On the previous tab this could be seen in the matrices of the song *Bohemian Rhapsody*, since there there was a lack of a clear structure. The song that was written by Roger Taylor had much more of a structure, as is the case with a very typical song by Freddie Mercury as a solo artist. On this page you can see the timbre- and pitch-based self-similarity matrices of the song *Living on My Own*. The song is in my view a classic Freddie Mercury song, that features Freddie's distinctive voice, flamboyant personality, and his love for dance music. The song's upbeat tempo, catchy melody, and electronic production are all hallmarks of Freddie's solo work. Additionally, the song features a memorable chorus, which is typical of Freddie's ability to write catchy songs.
+
+### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury. A legend he is and here is why. {data-commentary-width=400}
+
+`r knitr::include_graphics(logo)`
+
+***
+
+**Conclusion**  
+From the plots that I made we can already see that there is a lot of overlap between the songs by Freddie Mercury and the band Queen. Nevertheless, Queen has much more popular songs than Freddie Mercury as a solo artist. The popular songs are mostly happy, danceable and include lyrics. Queen has made use of complex harmonies and the songs are high in energy. Freddie Mercury's songs are also complex but not all popular ones are also danceable. 
+
+I will look more into durational features in the next couple of weeks as rhythm is a big part of what is  characteristic to disco music. Disco music was beloved by Freddie Mercury, but not by the other three band members. Thus, I am curious to see whether there is a difference that could help explain the distinction between the band Queen and Freddie Mercury.
+
 
 ### After Freddie Mercury's death, the sadness could be felt in the songs by Queen. {data-commentary-width=500}
 
@@ -456,18 +637,8 @@ I was curious about the emotion every song portrays. Freddie Mercury has once sa
 **Explanation**  
 There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. Roger Taylor has more turbulent songs, while Freddie Mercury also has quite a few sad songs. 
 
-### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury. A legend he is and here is why. {data-commentary-width=400}
 
-`r knitr::include_graphics(logo)`
-
-***
-
-**Conclusion**  
-From the plots that I made we can already see that there is a lot of overlap between the songs by Freddie Mercury and the band Queen. Nevertheless, Queen has much more popular songs than Freddie Mercury as a solo artist. The popular songs are mostly happy, danceable and include lyrics. Queen has made use of complex harmonies and the songs are high in energy. Freddie Mercury's songs are also complex but not all popular ones are also danceable. 
-
-I will look more into durational features in the next couple of weeks as rhythm is a big part of what is  characteristic to disco music. Disco music was beloved by Freddie Mercury, but not by the other three band members. Thus, I am curious to see whether there is a difference that could help explain the distinction between the band Queen and Freddie Mercury.
-
-### The spectrogram of *The Great Pretender* (originally from The Platters) by Freddie Mercury
+### The chromagram of *The Great Pretender* originally from The Platters by Freddie Mercury.
 
 ```{r}
 Pretender <-
@@ -489,9 +660,60 @@ Pretender <- Pretender %>%
   ) +
   geom_tile() +
   labs(title = "The Great Pretender - Freddie Mercury", x = "Time (s)", y = NULL, fill = "Magnitude") +
-  theme_minimal() +
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 16)) +
   scale_fill_viridis_c()
 
 Pretender
+```
+
+### And here is an extra, interesting self-similarity matrice of an atypical song by Queen.
+```{r}
+thirtynine <-
+  get_tidy_audio_analysis("6aNP9GlBi3VHPXl7w3Qjr9") |> # Change URI.
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+ThirtyninePlot <- bind_rows(
+  thirtynine |> 
+    compmus_self_similarity(pitches, "euclidean") |> 
+    mutate(d = d / max(d), type = "Chroma"),
+  thirtynine |> 
+    compmus_self_similarity(timbre, "euclidean") |> 
+    mutate(d = d / max(d), type = "Timbre")
+) |>
+  mutate() |> 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  facet_wrap(~type) +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() + 
+  theme(plot.title = element_text(size = 16)) +
+  labs(x = "", y = "", title = "'39")
+ThirtyninePlot
 ```
 
