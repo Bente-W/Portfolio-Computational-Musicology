@@ -259,7 +259,7 @@ grid.arrange(TimePlot, LovePlot, ncol = 1)
 ```
 
 ***
-*newest plots can be found under General, Keys and Chords*  
+*(newest plots can be found under General, Keys and Chords)*  
 **Explanation**  
 These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
 
