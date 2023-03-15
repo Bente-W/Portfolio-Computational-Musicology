@@ -42,256 +42,6 @@ library(compmus)
 ## beats are useful when the percussion is very clear, otherwise bars are great
 ```
 
-Chords {.storyboard}
-=========================================
-
-### Two chordograms of balads: *Love of My Life* and *Time Waits for No One*. {data-commentary-width=450}
-
-```{r}
-circshift <- function(v, n) {
-  if (n == 0) v else c(tail(v, n), head(v, -n))
-}
-
-#      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
-major_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
-minor_chord <-
-  c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
-seventh_chord <-
-  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
-
-major_key <-
-  c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
-minor_key <-
-  c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
-
-major_key <-
-  c(5.0, 2.0, 3.5, 2.0, 4.5, 4.0, 2.0, 4.5, 2.0, 3.5, 1.5, 4.0)
-minor_key <-
-  c(5.0, 2.0, 3.5, 4.5, 2.0, 4.0, 2.0, 4.5, 3.5, 2.0, 1.5, 4.0)
-
-chord_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:7", circshift(seventh_chord, 6),
-    "Gb:maj", circshift(major_chord, 6),
-    "Bb:min", circshift(minor_chord, 10),
-    "Db:maj", circshift(major_chord, 1),
-    "F:min", circshift(minor_chord, 5),
-    "Ab:7", circshift(seventh_chord, 8),
-    "Ab:maj", circshift(major_chord, 8),
-    "C:min", circshift(minor_chord, 0),
-    "Eb:7", circshift(seventh_chord, 3),
-    "Eb:maj", circshift(major_chord, 3),
-    "G:min", circshift(minor_chord, 7),
-    "Bb:7", circshift(seventh_chord, 10),
-    "Bb:maj", circshift(major_chord, 10),
-    "D:min", circshift(minor_chord, 2),
-    "F:7", circshift(seventh_chord, 5),
-    "F:maj", circshift(major_chord, 5),
-    "A:min", circshift(minor_chord, 9),
-    "C:7", circshift(seventh_chord, 0),
-    "C:maj", circshift(major_chord, 0),
-    "E:min", circshift(minor_chord, 4),
-    "G:7", circshift(seventh_chord, 7),
-    "G:maj", circshift(major_chord, 7),
-    "B:min", circshift(minor_chord, 11),
-    "D:7", circshift(seventh_chord, 2),
-    "D:maj", circshift(major_chord, 2),
-    "F#:min", circshift(minor_chord, 6),
-    "A:7", circshift(seventh_chord, 9),
-    "A:maj", circshift(major_chord, 9),
-    "C#:min", circshift(minor_chord, 1),
-    "E:7", circshift(seventh_chord, 4),
-    "E:maj", circshift(major_chord, 4),
-    "G#:min", circshift(minor_chord, 8),
-    "B:7", circshift(seventh_chord, 11),
-    "B:maj", circshift(major_chord, 11),
-    "D#:min", circshift(minor_chord, 3)
-  )
-
-key_templates <-
-  tribble(
-    ~name, ~template,
-    "Gb:maj", circshift(major_key, 6),
-    "Bb:min", circshift(minor_key, 10),
-    "Db:maj", circshift(major_key, 1),
-    "F:min", circshift(minor_key, 5),
-    "Ab:maj", circshift(major_key, 8),
-    "C:min", circshift(minor_key, 0),
-    "Eb:maj", circshift(major_key, 3),
-    "G:min", circshift(minor_key, 7),
-    "Bb:maj", circshift(major_key, 10),
-    "D:min", circshift(minor_key, 2),
-    "F:maj", circshift(major_key, 5),
-    "A:min", circshift(minor_key, 9),
-    "C:maj", circshift(major_key, 0),
-    "E:min", circshift(minor_key, 4),
-    "G:maj", circshift(major_key, 7),
-    "B:min", circshift(minor_key, 11),
-    "D:maj", circshift(major_key, 2),
-    "F#:min", circshift(minor_key, 6),
-    "A:maj", circshift(major_key, 9),
-    "C#:min", circshift(minor_key, 1),
-    "E:maj", circshift(major_key, 4),
-    "G#:min", circshift(minor_key, 8),
-    "B:maj", circshift(major_key, 11),
-    "D#:min", circshift(minor_key, 3)
-  )
-
-
-time <-
-  get_tidy_audio_analysis("0UkCqv8ec7D1W3uGzZa1CP") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-
-loveofmylife <-
-  get_tidy_audio_analysis("2BlNyI35idBaI6BN6WGZeQ") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-
-turn <-
-  get_tidy_audio_analysis("6pDnUKu9z2FKTmwS7TDm3Q") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-
-rhapsody <-
-  get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") |>
-  compmus_align(bars, segments) |>
-  select(bars) |>
-  unnest(bars) |>
-  mutate(
-    pitches =
-      map(segments,
-        compmus_summarise, pitches,
-        method = "mean", norm = "manhattan"
-      )
-  )
-
-TimePlot <- time |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
-  theme_minimal() +
-  labs(title = "Time Waits for No One - Freddie Mercury", x = "", y = "") +
-  theme(axis.text.y = element_text(size = 7), 
-        axis.ticks.x = element_blank(),
-        axis.title.x = element_blank(),
-        plot.margin = unit(c(5.5, 5.5, 0, 5.5), "pt"))
-
-LovePlot <- loveofmylife |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
-  theme_minimal() +
-  labs(title = "Love of My Life - Queen", x = "Time (s)", y = "") +
-  theme(axis.text.y = element_text(size = 7), plot.margin=unit(c(5.5, 5.5, 0, 5.5), "pt"))
-
-TurnPlot <- turn |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_minimal() +
-  labs(title = "Let's Turn it On - Freddie Mercury", x = "Time (s)", y = "")
-
-RhapsodyChordPlot <- rhapsody |> 
-  compmus_match_pitch_template(
-    chord_templates,         # Change to chord_templates if descired
-    method = "euclidean",  # Try different distance metrics
-    norm = "manhattan"     # Try different norms
-  ) |>
-  ggplot(
-    aes(x = start + duration / 2, width = duration, y = name, fill = d)
-  ) +
-  geom_tile() +
-  scale_fill_viridis_c(guide = "none") +
-  theme_minimal() +
-  labs(title = "Bohemian Rhapsody - Queen", x = "Time (s)", y = "")
-
-grid.arrange(TimePlot, LovePlot, ncol = 1)
-```
-
-***
-*(newest plots can be found under General, Keys and Chords)*  
-**Explanation**  
-These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
-
-The two songs are, in my opinion, quite similar in style. Both ballads have intricate piano arrangements and are a little more stripped down compared to the rest of the discography. That is why I thought it would be interesting to see how the chordograms compared to one another. 
-
-**Comparison**  
-I still need to listen to the songs while having a closer look at the chordograms. But I can already see that there are somewhat more saturated colors in Freddie Mercury's plot. This would mean that the chords are more distinguishable. However, there are four very bright lines in the Queen plot, which could explain why the rest of the figure is less saturated. Another explanation could be that the song by Freddie Mercury is less complicated than the Queen song, I will look at and listen to the songs and the chord progressions to draw a good conclusion.
-
-### Electronic disco song *Let's Turn it On* by Freddie Mercury.
-
-```{r}
-TurnPlot
-```
-
-***
-
-**Explanation**  
-I think it is interesting to see that in this very electronic song, there is not a clear pattern in the chords, whereas in the former two figures there was some sort of dark blue path throughout the plots. All chords that include the 7 have a darker blue line across the entire plot, which is explainable by the way pitches are constructed. 
-
-### Chordogram of *Bohemian Rhapsody*.
-
-```{r}
-RhapsodyChordPlot
-```
-
-***
-
-**Explanation**  
-Since *Bohemian Rhapsody* is such a complex song, I wondered what it would look like in a chordogram. I will also still take a look at it in more detail.
-
-**Conclusion**  
-
 
 Introduction
 =========================================
@@ -620,7 +370,7 @@ freddie <-
       )
   )
 freddie$track.album.release_date = c(1987, 1992, 1984, 1988, 1985, 1985, 1988, 1989, 1985, 1985, 1988, 1988, 1985, 2019, 1985, 1985, 1985, 1985, 1985, 1985, 1985, 1985, 1988, 1988, 1988)
-
+freddie <- freddie %>% filter(track.album.release_date != 2019)
 
 queen <-
   get_playlist_audio_features(
@@ -703,22 +453,31 @@ TempoPlot <- ggplot(Tempo,
     size = "Time Signature (beats)",
     alpha = "Volume (dBFS)"
   )
-
 TempoPlotly <- ggplotly(TempoPlot, tooltip = "text")
-TempoPlotly
-#TempoPlotly %>%
-#  style(hoverinfo = "text",
- #       hovertext = paste("Track: ", Tempo$track, "<br>",
-  #                        "Artist: ", Tempo$category, "<br>",
-   #                       "Tempo: ", Tempo$tempo, "<br>",
-    #                      "Loudness: ", Tempo$loudness, "<br>",
-     #                     "Beats per measure: ", Tempo$time_signature))
+
+# Animated Tempo Plot
+Tempo %>%
+  plot_ly(x = ~tempo, y = ~tempo_section_sd, size = ~time_signature, color = ~track.album.release_date, opacity = ~factor(loudness), 
+    hoverinfo = "text", text = paste("Track: ", Tempo$track, "<br>",
+                          "Artist: ", Tempo$category, "<br>",
+                          "Release date: ", Tempo$track.album.release_date, "<br>",
+                          "Tempo: ", Tempo$tempo, "<br>",
+                          "Loudness: ", Tempo$loudness, "<br>",
+                          "Time signature: ", Tempo$time_signature)) %>%
+  add_markers(frame = ~category) %>%
+  layout(title = 'Tempo for Each Artist', xaxis = list(title = "Mean Tempo (bpm)"), yaxis = list(range = c(0,10), title = 'SD Tempo')) %>%
+  animation_opts(frame = 2000, 
+                 transition = 1500,
+                 easing = "linear") %>%
+  animation_slider(currentvalue = list(prefix = NULL,
+                                       font = list(color = "a9dea9", size = 20)))
+
 ```
 ***
 
 **Explanation**  
 Here you can see the mean tempo, the deviation of each song from that mean tempo, the loudness in opacity
-and the beats per measure signature in the size of the point. The biggest deviation can be found in the oldest Queen songs, which can be seen in the labels if you hover over the points, or in the songs with either a relatively slow or fast tempo. Older Queen songs were recorded using analog equipment, which may have had limitations in terms of capturing precise tempos. This could have led to more variation in tempo in their older recordings. It might also be, that the earlier songs were even more experimental than later songs and incorporated more styles that suited more tempo changes.
+and the beats per measure signature in the size of the point. The biggest deviation can be found in the oldest Queen songs, as the darker points are at the top and brighter points are more toward the bottom, or in the songs with either a relatively slow or fast tempo. Older Queen songs were recorded using analog equipment, which may have had limitations in terms of capturing precise tempos. This could have led to more variation in tempo in their older recordings. It might also be, that the earlier songs were even more experimental than later songs and incorporated more styles that suited more tempo changes.
 
 **Time signature**  
 Spotify API had a hard time with the songs *Execution of Flash* as well as *Ming's Theme* by Queen because there is no consistent time signature. Both songs are from the album *Flash Gordon* and as you will see in the chromagram section, this is not a typical album. The song *Dear Friends* by Queen also stands out; it states that there is only one beat per measure but when I listened to the song, I felt like the time signature was 4/4. I do have to say that the arrangement with the piano emphasized all beats very equally, that might be an explanation for the weird time signature.
@@ -809,6 +568,51 @@ I was curious about the emotion every song portrays. Freddie Mercury has once sa
 
 **Explanation**  
 There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. Roger Taylor has more turbulent songs, while Freddie Mercury also has quite a few sad songs. 
+
+### Testing animated plots so I probably don't need this plot anymore.
+
+```{r}
+MeanFreddie <- freddie %>%
+  group_by(track.album.release_date) %>%
+  summarise(mean_pop = mean(track.popularity), 
+            mean_danceability = mean(danceability),
+            mean_tempo = mean(tempo)) %>%
+  mutate(category = "Freddie Mercury")
+
+MeanQueen <- queen %>%
+  group_by(track.album.release_date) %>%
+  summarise(mean_pop = mean(track.popularity), 
+            mean_danceability = mean(danceability),
+            mean_tempo = mean(tempo)) %>%
+  mutate(category = "Queen")
+
+MeanRoger <- roger %>%
+  group_by(track.album.release_date) %>%
+  summarise(mean_pop = mean(track.popularity), 
+            mean_danceability = mean(danceability),
+            mean_tempo = mean(tempo)) %>%
+  mutate(category = "Roger Taylor")
+
+Total <- rbind(MeanFreddie, MeanQueen, MeanRoger)
+
+Test <- Tempo %>%
+  plot_ly(x = ~tempo_section_mean, y = ~tempo_section_sd, size = ~danceability, color = ~track.album.release_date,
+    hoverinfo = "text", text = paste("Track: ", Tempo$track, "<br>",
+                                   "Artist: ", Tempo$category, "<br>",
+                                   "Release Date: ", Tempo$track.album.release_date, "<br>",
+                                   "Tempo: ", Tempo$tempo_section_mean)) %>%
+  add_text(x = 150, y = 40, text = ~category, id = ~1, frame = ~category,
+           textfont = list(size = 20, color = toRGB("gray80"))) %>%
+  add_markers(frame = ~category) %>%
+  layout(title = 'Tempo for Each Artist', xaxis = list(title = "Mean Tempo (bpm)"), yaxis = list(title = 'SD Tempo'), showlegend = FALSE) %>%
+  animation_opts(frame = 2000, 
+                 transition = 1500,
+                 easing = "linear") %>%
+  animation_slider(hide = TRUE)
+
+TempoPlotly
+```
+
 
 Chromagram {.storyboard}
 =========================================
@@ -1178,6 +982,257 @@ ThirtyninePlot
 Coincidentally, this song is also not written by Freddie Mercury but by Brian May. I found this song very interesting, because of it deviates greatly from the normal style of Queen. It is a blend of folk and progressive rock with acoustic instruments, vocal harmonies, and storytelling lyrics. At around 35 seconds into the song the beat comes in. This interestingly leads to a change in the chroma matrix but a much less clear change in the timbre matrix. After one and a half minutes the bridge introduces new chords. I find it very strange that this is so clear in the timbre matrix but not in the chroma matrix. It almost feels as though the matrices are switched around. Specially because the bright yellow cross in the chroma matrix is exactly where the electric guitar makes an appearance.
 
 <iframe src="https://open.spotify.com/embed/playlist/2POKY9r3mluVe4rkDzS0AA?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+
+Chords {.storyboard}
+=========================================
+
+### Two chordograms of balads: *Love of My Life* and *Time Waits for No One*. {data-commentary-width=450}
+
+```{r}
+circshift <- function(v, n) {
+  if (n == 0) v else c(tail(v, n), head(v, -n))
+}
+
+#      C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B
+major_chord <-
+  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
+minor_chord <-
+  c(   1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
+seventh_chord <-
+  c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
+
+major_key <-
+  c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
+minor_key <-
+  c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
+
+major_key <-
+  c(5.0, 2.0, 3.5, 2.0, 4.5, 4.0, 2.0, 4.5, 2.0, 3.5, 1.5, 4.0)
+minor_key <-
+  c(5.0, 2.0, 3.5, 4.5, 2.0, 4.0, 2.0, 4.5, 3.5, 2.0, 1.5, 4.0)
+
+chord_templates <-
+  tribble(
+    ~name, ~template,
+    "Gb:7", circshift(seventh_chord, 6),
+    "Gb:maj", circshift(major_chord, 6),
+    "Bb:min", circshift(minor_chord, 10),
+    "Db:maj", circshift(major_chord, 1),
+    "F:min", circshift(minor_chord, 5),
+    "Ab:7", circshift(seventh_chord, 8),
+    "Ab:maj", circshift(major_chord, 8),
+    "C:min", circshift(minor_chord, 0),
+    "Eb:7", circshift(seventh_chord, 3),
+    "Eb:maj", circshift(major_chord, 3),
+    "G:min", circshift(minor_chord, 7),
+    "Bb:7", circshift(seventh_chord, 10),
+    "Bb:maj", circshift(major_chord, 10),
+    "D:min", circshift(minor_chord, 2),
+    "F:7", circshift(seventh_chord, 5),
+    "F:maj", circshift(major_chord, 5),
+    "A:min", circshift(minor_chord, 9),
+    "C:7", circshift(seventh_chord, 0),
+    "C:maj", circshift(major_chord, 0),
+    "E:min", circshift(minor_chord, 4),
+    "G:7", circshift(seventh_chord, 7),
+    "G:maj", circshift(major_chord, 7),
+    "B:min", circshift(minor_chord, 11),
+    "D:7", circshift(seventh_chord, 2),
+    "D:maj", circshift(major_chord, 2),
+    "F#:min", circshift(minor_chord, 6),
+    "A:7", circshift(seventh_chord, 9),
+    "A:maj", circshift(major_chord, 9),
+    "C#:min", circshift(minor_chord, 1),
+    "E:7", circshift(seventh_chord, 4),
+    "E:maj", circshift(major_chord, 4),
+    "G#:min", circshift(minor_chord, 8),
+    "B:7", circshift(seventh_chord, 11),
+    "B:maj", circshift(major_chord, 11),
+    "D#:min", circshift(minor_chord, 3)
+  )
+
+key_templates <-
+  tribble(
+    ~name, ~template,
+    "Gb:maj", circshift(major_key, 6),
+    "Bb:min", circshift(minor_key, 10),
+    "Db:maj", circshift(major_key, 1),
+    "F:min", circshift(minor_key, 5),
+    "Ab:maj", circshift(major_key, 8),
+    "C:min", circshift(minor_key, 0),
+    "Eb:maj", circshift(major_key, 3),
+    "G:min", circshift(minor_key, 7),
+    "Bb:maj", circshift(major_key, 10),
+    "D:min", circshift(minor_key, 2),
+    "F:maj", circshift(major_key, 5),
+    "A:min", circshift(minor_key, 9),
+    "C:maj", circshift(major_key, 0),
+    "E:min", circshift(minor_key, 4),
+    "G:maj", circshift(major_key, 7),
+    "B:min", circshift(minor_key, 11),
+    "D:maj", circshift(major_key, 2),
+    "F#:min", circshift(minor_key, 6),
+    "A:maj", circshift(major_key, 9),
+    "C#:min", circshift(minor_key, 1),
+    "E:maj", circshift(major_key, 4),
+    "G#:min", circshift(minor_key, 8),
+    "B:maj", circshift(major_key, 11),
+    "D#:min", circshift(minor_key, 3)
+  )
+
+
+time <-
+  get_tidy_audio_analysis("0UkCqv8ec7D1W3uGzZa1CP") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      )
+  )
+
+loveofmylife <-
+  get_tidy_audio_analysis("2BlNyI35idBaI6BN6WGZeQ") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      )
+  )
+
+turn <-
+  get_tidy_audio_analysis("6pDnUKu9z2FKTmwS7TDm3Q") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      )
+  )
+
+rhapsody <-
+  get_tidy_audio_analysis("4u7EnebtmKWzUH433cf5Qv") |>
+  compmus_align(bars, segments) |>
+  select(bars) |>
+  unnest(bars) |>
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      )
+  )
+
+TimePlot <- time |> 
+  compmus_match_pitch_template(
+    chord_templates,         # Change to chord_templates if descired
+    method = "euclidean",  # Try different distance metrics
+    norm = "manhattan"     # Try different norms
+  ) |>
+  ggplot(
+    aes(x = start + duration / 2, width = duration, y = name, fill = d)
+  ) +
+  geom_tile() +
+  scale_fill_viridis_c(guide = "none") +
+  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
+  theme_minimal() +
+  labs(title = "Time Waits for No One - Freddie Mercury", x = "", y = "") +
+  theme(axis.text.y = element_text(size = 7), 
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank(),
+        plot.margin = unit(c(5.5, 5.5, 0, 5.5), "pt"))
+
+LovePlot <- loveofmylife |> 
+  compmus_match_pitch_template(
+    chord_templates,         # Change to chord_templates if descired
+    method = "euclidean",  # Try different distance metrics
+    norm = "manhattan"     # Try different norms
+  ) |>
+  ggplot(
+    aes(x = start + duration / 2, width = duration, y = name, fill = d)
+  ) +
+  geom_tile() +
+  scale_fill_viridis_c(guide = "none") +
+  scale_y_discrete(guide = guide_axis(n.dodge=2)) +
+  theme_minimal() +
+  labs(title = "Love of My Life - Queen", x = "Time (s)", y = "") +
+  theme(axis.text.y = element_text(size = 7), plot.margin=unit(c(5.5, 5.5, 0, 5.5), "pt"))
+
+TurnPlot <- turn |> 
+  compmus_match_pitch_template(
+    chord_templates,         # Change to chord_templates if descired
+    method = "euclidean",  # Try different distance metrics
+    norm = "manhattan"     # Try different norms
+  ) |>
+  ggplot(
+    aes(x = start + duration / 2, width = duration, y = name, fill = d)
+  ) +
+  geom_tile() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() +
+  labs(title = "Let's Turn it On - Freddie Mercury", x = "Time (s)", y = "")
+
+RhapsodyChordPlot <- rhapsody |> 
+  compmus_match_pitch_template(
+    chord_templates,         # Change to chord_templates if descired
+    method = "euclidean",  # Try different distance metrics
+    norm = "manhattan"     # Try different norms
+  ) |>
+  ggplot(
+    aes(x = start + duration / 2, width = duration, y = name, fill = d)
+  ) +
+  geom_tile() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_minimal() +
+  labs(title = "Bohemian Rhapsody - Queen", x = "Time (s)", y = "")
+
+grid.arrange(TimePlot, LovePlot, ncol = 1)
+```
+
+***
+*(newest plots can be found under General, Keys and Chords)*  
+**Explanation**  
+These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
+
+The two songs are, in my opinion, quite similar in style. Both ballads have intricate piano arrangements and are a little more stripped down compared to the rest of the discography. That is why I thought it would be interesting to see how the chordograms compared to one another. 
+
+**Comparison**  
+I still need to listen to the songs while having a closer look at the chordograms. But I can already see that there are somewhat more saturated colors in Freddie Mercury's plot. This would mean that the chords are more distinguishable. However, there are four very bright lines in the Queen plot, which could explain why the rest of the figure is less saturated. Another explanation could be that the song by Freddie Mercury is less complicated than the Queen song, I will look at and listen to the songs and the chord progressions to draw a good conclusion.
+
+### Electronic disco song *Let's Turn it On* by Freddie Mercury.
+
+```{r}
+TurnPlot
+```
+
+***
+
+**Explanation**  
+I think it is interesting to see that in this very electronic song, there is not a clear pattern in the chords, whereas in the former two figures there was some sort of dark blue path throughout the plots. All chords that include the 7 have a darker blue line across the entire plot, which is explainable by the way pitches are constructed. 
+
+### Chordogram of *Bohemian Rhapsody*.
+
+```{r}
+RhapsodyChordPlot
+```
+
+***
+
+**Explanation**  
+Since *Bohemian Rhapsody* is such a complex song, I wondered what it would look like in a chordogram. I will also still take a look at it in more detail.
+
+**Conclusion**  
 
 Keys {.storyboard}
 =========================================
