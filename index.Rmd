@@ -29,6 +29,11 @@ library(shiny)
 library(knitr)
 library(grid)
 library(gridExtra)
+library(tidymodels)
+library(ggdendro)
+library(kknn)
+# optional, cluster trees should be prettier but not very interpretable 
+library(heatmaply)
 ### package by Ashley
 library(compmus)
 
@@ -43,198 +48,12 @@ library(compmus)
 ### tempogram
 ## safe if you have something you like as an image
 ## or even safe dataframe/ggplot with saverds(), readrds()
+### classification
+## will give errors
 ```
 
-Tempo {.storyboard}
-=========================================
 
-### The seemingly structured song *Innuendo* (according to the self-similarity matrices) has a difficult tempo to detect. {data-commentary-width=450}
-
-```{r}
-readRDS("InnuendoTempogram")
-```
-
-***
-*(all plots under Tempo are new, also some new plots throughout my portfolio)*  
-**Tempogram**  
-A tempogram shows for every possible tempo how well it matches with the song. A good match turns up bright yellow and everywhere you see dark blue, the tempo does not lign up with the song.
-
-**Explanation**  
-In the self-similarity matrices I ended with the song [Innuendo](https://open.spotify.com/track/0BzhS74ByIVlyz8BedHaYi?si=0a5663f08a594ea0) by Queen. Even though the song has a very clear drum and rhythm, the drum does make use of triplets which probably makes it more difficult to detect a uniform tempo. When the very contrasting bridge starts (at around 2:45), they start with a low energy guitar with hints of flamenco along with soft vocals by Freddie Mercury. In this section the rhythm sometimes slows down or speeds up to match the dynamics of the vocals and other instruments, also known as rubato. Despite the fluctuation in tempo, this section does seem to have a lower tempo which can also be seen in the figure (there are more bright yellow bits between 80 and 120 BPM then before). Just before the 200 seconds mark, the speed picks up and you hear guitar and clapping. Brian May incorporates Spanish guitar techniques such as tremolo picking and arpeggios, which are commonly found in Mediterranean and flamenco music. Flamenco music is also very rhythmic; as you can see in the graph, this part has a much clearer tempo though still not a very consistent tempo. Another section starts at around 236 seconds, which is a sort of classical, operatic, walz part.  
-This tempogram shows that despite the seemingly clear structure the song has according to the self-similarity matrices, there is definitely a lot going on in terms of rhythm and tempo.
-
-### The song that was written by Roger Taylor has a clearer tempo in the tempogram. 
-
-```{r}
-CarTempogram <- readRDS("CarTempogram")
-ggplotly(CarTempogram)
-```
-***
-
-**Explanation**  
-[This](https://open.spotify.com/track/253ewjP2R1LjKqA70mGdnk?si=eb97228f37284740) clearly structured song (as could be seen in the self-similarity matrices) written by Roger Taylor has faintly more of a coherent tempo. The uptempo rock song has a driving rhythm and features Taylor's vocals and a prominent guitar riff from Brian May. The lyrics are about Taylor's love for his car and as I said before, the song also includes some car sounds, but that did not change the accuracy of the tempogram.
-
-### The disco songs by Freddie Mercury are much easier to plot in a tempogram. 
-
-```{r}
-Kills <- readRDS("LoveKillsTempogram")
-Living <- readRDS("LivingOwnTempogram")
-Born <- readRDS("BornTempogram")
-Lover <- readRDS("YourKindofLoverTempogram")
-
-grid.arrange(Kills, Living, Born, Lover, ncol = 2)
-```
-
-***
-
-**Explanation**  
-All these songs are solo songs by Freddie Mercury. The bottom two are part of the album *Mr. Bad Guy*, the other two are singles. The songs are very electronic and disco inspired. As [Freddie Mercury said himself](http://www.freddiemercury.com/en/archive#mr_bad_guy): "I wanted to cover such things as reggae rhythms and I’ve done a couple of things with a symphony orchestra. It has a very rich sound and it’s very beat orientated." Electronic, beat orientated songs such as these four are very likely to have a clearly visible tempo. Thus, I was also curious about a very different song, namely *Barcelona*.
-
-### The song *Barcelona* by Freddie Mercury and opera singer Montserrat Caballé is all over the place tempo wise. 
-
-```{r}
-readRDS("BarcelonaTempogramCyc")
-```
-
-***
-**Explanation**  
-The song [Barcelona](https://open.spotify.com/track/3BdId1EhcMX7yAzwzQJLAD?si=7cee17fa0b0943e7) is very "un-rock ’n’ roll" as Freddie Mercury stated himself. It "really required a lot of discipline" and "[the] ideas [...] underwent significant changes along the road to perfection." ([Freddie Mercury's official site](http://www.freddiemercury.com/en/archive#Barcelona_original)). In other words, Freddie Mercury put a lot of time and effort in the songs on the album *Barcelona* to create something really unique.  
-
-
-### All different tempi for each artist. {data-commentary-width=450}
-
-```{r}
-### delete in final portfolio
-# creating a color blind friendly color palette
-cbbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", 
-"#CC79A7","#000000")
-gray <- gray.colors(5, start = 0, end = 1, gamma = 2.2, rev = TRUE)
-safe_palette <- c("#007B71", "#B6231B", "#977400", "#a9dea9", "#332288", "#AA4499", 
-                             "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
-palette2 <- c("#B6231B", "#977400", "#a9dea9", "#332288", "#AA4499", 
-                             "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
-
-freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8') %>%
-  mutate(
-    track.album.release_date =
-      map_int(
-        track.album.release_date,
-        \(x) as.integer(str_sub(x, start = 1, end = 4))
-      )
-  )
-freddie$track.album.release_date = c(1987, 1992, 1984, 1988, 1985, 1985, 1988, 1989, 1985, 1985, 1988, 1988, 1985, 2019, 1985, 1985, 1985, 1985, 1985, 1985, 1985, 1985, 1988, 1988, 1988)
-
-queen <- get_playlist_audio_features('', '3FOkKYT1wXXJH8L2lcSP5t') %>%
-  mutate(
-    track.album.release_date =
-      map_int(
-        track.album.release_date,
-        \(x) as.integer(str_sub(x, start = 1, end = 4))
-      )
-  )
-
-after <- get_playlist_audio_features('', '2Oou3UXp7fHZsHHxQ9jQnC') %>%
-  mutate(
-    track.album.release_date =
-      map_int(
-        track.album.release_date,
-        \(x) as.integer(str_sub(x, start = 1, end = 4))
-      )
-  )
-roger <- get_playlist_audio_features('', '7eYTx9OtJPrKBst4bWr3PD') %>%
-  mutate(
-    track.album.release_date =
-      map_int(
-        track.album.release_date,
-        \(x) as.integer(str_sub(x, start = 1, end = 4))
-      )
-  )
-
-Comparison2 <-
-  bind_rows(
-    queen %>% mutate(category = "Band (Queen)"),
-    freddie %>% mutate(category = "Freddie Mercury"),
-    after %>% mutate(category = "After the death"),
-    roger %>% mutate(category = "Roger Taylor")
-  )
-Comparison2 <- Comparison2 %>% rename(popularity = track.popularity, track = track.name)
-
-
-TempiPlot <- ggplot(Comparison2, aes(tempo, fill = category, text = paste("Artist: ", category, "<br>",
-                                                                          "Tempo: ", tempo, "<br>", 
-                                                                          "Album: ", track.album.name))) +
-  geom_histogram(binwidth = 5) +
-  scale_fill_manual(values=safe_palette) +
-  annotate("text", x = 5, y = 2, label = "Yeah - Queen", size = 3) +
-  annotate("text", x = 202.5, y = 4, label = "My Life Has", size = 3) +
-  annotate("text", x = 202.5, y = 3, label = "Been Saved", size = 3) +
-  annotate("text", x = 202.5, y = 2, label = "- Queen", size = 3) +
-  labs(title = "Distribution of Tempi", x = "Tempo", y = "Frequency", fill = "Artist", fontface = "bold", size = 2) +
-  theme_bw() +
-  theme(axis.ticks.x = element_blank(), axis.ticks.y = element_blank())
-
-ggplotly(TempiPlot, tooltip = "text")
-```
-
-***
-**Conclusion**  
-Interestingly, even though according to [Dirk Moelants (2002)](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0762d815903c643b587250cfc1f4659c9da9c4a5) the preferred tempo is between 120 and 130 beats per minute (BPM), in this plot you can see that most songs are around 80 BPM. This is relatively slow and specially for the many disco inspired songs by Freddie Mercury. The most frequent tempo is around 110 BPM for Queen, and 160 BPM for Roger Taylor, but his songs are very evenly distributed.
-
-**Reference**  
-Moelants, D. (2002). Preferred tempo reconsidered. C. Stevens, D. Burnham, G. McPherson, E. Schubert, J. Renwick (Eds.), *Proceedings of the 7th International Conference on Music Perception and Cognition*. Sydney, Adelaide, Causal Productions, 580–583.
-
-### tempocurves?
-
-```{r}
-lovekills <-
-  get_tidy_audio_analysis("1cApo5IeHOea0dD3Cs3QMB") |>
-  select(segments) |>
-  unnest(segments)
-
-lovekills |>
-  mutate(loudness_max_time = start + loudness_max_time) |>
-  arrange(loudness_max_time) |>
-  mutate(delta_loudness = loudness_max - lag(loudness_max)) |>
-  ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
-  geom_line() +
-  xlim(0, 30) +
-  theme_minimal() +
-  labs(x = "Time (s)", y = "Novelty")
-
-lovekills |>
-  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
-  arrange(start) |>
-  mutate(pitches = map2(pitches, lag(pitches), `-`)) |>
-  slice(-1) |> 
-  compmus_gather_chroma() |> 
-  group_by(start, duration) |> 
-  summarise(novelty = sum(log1p(pmax(value, 0)))) |> 
-  ggplot(aes(x = start + duration / 2, y = novelty)) +
-  geom_line() +
-  xlim(0, 30) +
-  theme_minimal() +
-  labs(x = "Time (s)", y = "Novelty")
-
-lovekills |>
-  arrange(start) |>
-  mutate(timbre = map2(timbre, lag(timbre), `-`)) |>
-  slice(-1) |>
-  compmus_gather_timbre() |>
-  group_by(start, duration) |> 
-  summarise(novelty = sum(log1p(pmax(value, 0)))) |> 
-  ggplot(aes(x = start + duration / 2, y = novelty)) +
-  geom_line() +
-  xlim(0, 30) +
-  theme_minimal() +
-  labs(x = "Time (s)", y = "Novelty")
-
-```
-
-***
-I still have to take a look at which tempocurves would be interesting to include.
-
-
-Introduction
+Introduction {data-icon="ion-ios-home-outline"}
 =========================================
 
 Column {data-width=600}
@@ -245,13 +64,13 @@ Column {data-width=600}
 **Portfolio Computational Musicology**  
 Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting in the backseat of the car, listening to my own CD with all the hits of the famous rock band. I could sing along to every song, even though I did not speak any English. The movie “Bohemian Rhapsody” portrayed (though not completely accurate) a small portion of the lives of the four band members. It reminded me of the solo careers three of the members had, only John Deacon never went solo. The drummer Roger Taylor was the first to release a solo album in 1981. After which Freddie Mercury and Brian May followed. When I heard the song [Time Waits For No One](https://open.spotify.com/track/0UkCqv8ec7D1W3uGzZa1CP?si=2b721e3080154085) for the first time not long ago, I thought it was just a Queen song I had not heard before. When I noticed that it was a song exclusively by Freddie Mercury, I wondered how it differed from songs produced by the band. Freddie Mercury has had less success as a solo artist than together with his three band members, what could have been the reason for this? 
 
-Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I am curious whether his solo career had any influence on the songs that were produced afterwards together with the band members. I will also take a look at the solo songs by Roger Taylor as he was the first to go solo. There will also be a small comparison between Queen with Freddie Mercury as lead singer, and after the singer's death.
+Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I will take a look at the solo songs by Roger Taylor as he was the first to go solo. There will also be some comparisons between Queen with Freddie Mercury as lead singer, and after the singer's death.
 
 **Expectations**  
-The band Queen is known for their grandiosity and experimentation. They were not afraid to deviate from the norm and tried to mix all kinds of genres together in their songs including rock, pop, metal, opera and electronic music. It is therefore very difficult to pinpoint the characteristics of Queen and to select typical songs. However, many songs seem to be theatrical or dramatic featuring intricate arrangements and harmonies, the lyrics have a message and explore complex themes, and the songs are pushing boundaries of rock music. These qualities can be clearly heard in what may be the most famous Queen song [Bohemian Rhapsody](https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv?si=16ec60afbe5e4102), which includes the complex harmonies and shifts between different genres such as rock, pop and opera. It beautifully displays Freddie Mercury's impressive range and theatrical feeling.
+The band Queen is known for their grandiosity and experimentation. They were not afraid to deviate from the norm and tried to mix all kinds of genres together in their songs including rock, pop, metal, opera and electronic music. It is therefore very difficult to pinpoint the characteristics of Queen and to select typical songs. However, many songs seem to be theatrical or dramatic featuring intricate arrangements and harmonies, the lyrics have a message and explore complex themes, and the songs are pushing boundaries of rock music. These qualities can be clearly heard in what may be the most famous Queen song [Bohemian Rhapsody](https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv?si=16ec60afbe5e4102), which includes the complex harmonies and shifts between different genres such as rock, pop and opera. It also beautifully displays Freddie Mercury's impressive range and theatrical feeling.
 
 Needless to say, these iconic vocals can also be heard in the solo songs released by Freddie Mercury. He did seem to enjoy Disco music more than the other band members. Disco music is known for its great danceability. Therefore, the genre of disco music is characterized by a strong and steady beat, often resulting in a 4/4 time signature. To add more interest and to give songs more energy, guitar bass lines and drum hi-hats frequently contained syncopated rhythms. Disco music also uses a lot of different instruments and has repetitive but funky and soulful vocals. The classic disco beat can be heard for example in the songs [Love Kills](https://open.spotify.com/track/1cApo5IeHOea0dD3Cs3QMB?si=da3d27a25d344081), [Living on My Own](https://open.spotify.com/track/6cNTGVmP2CzJpLQ01QIaD0?si=63261b0fc1364d5f) and [I Was Born to Love You](https://open.spotify.com/track/14FAtIQZsRYeu8zVI33l7f?si=22236162e3fe4664) on his album Mr. Bad Guy. [Your Kind of Lover](https://open.spotify.com/track/2jzS0f1C4af20OavmCodWQ?si=f9879e78d4434b00) from the same album also includes a typical disco bassline.  
-In addition to disco, opera is also a common genre in the songs released by Freddie Mercury. Together with opera singer Montserrat Caballé he has brought out an album, from which the song with the same name as the album, [Barcelona](https://open.spotify.com/track/3BdId1EhcMX7yAzwzQJLAD?si=687c01b1ffe546e4), is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch.  
+In addition to disco, opera is also a common genre in the songs released by Freddie Mercury. Together with opera singer Montserrat Caballé he has brought out an album, from which the like-named song [Barcelona](https://open.spotify.com/track/3BdId1EhcMX7yAzwzQJLAD?si=687c01b1ffe546e4) is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch.  
 Since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting such as catchy hooks and melodies, but I also anticipate Queen having more complex and grandiose songs while Freddie Mercury will probably be more stripped down and focused on vocals, piano and danceability.
 
 **Representation**  
@@ -664,10 +483,10 @@ Forever <- Comparison1 %>% filter(track == "Who Wants To Live Forever - Remaster
 The first thing that stands out is that Roger Taylor is far less popular than Queen and Freddie Mercury. The most popular song by Roger Taylor is [Man On Fire](https://open.spotify.com/track/6X2yqosH7UAcWZO07XN04e?si=fc8ac5d807ce4f6d) and has a popularity of `r PopRoger$popularity`. It is part of the album ‘Strange Frontier’ that was released in the UK in June 1984, with *Man On Fire* single released three weeks earlier. The three most popular songs by Queen are [Bohemian Rhapsody](https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv?si=7427df9f9d464ba9), [Another One Bites The Dust](https://open.spotify.com/track/5vdp5UmvTsnMEMESIF2Ym7?si=4f3ba0d324524393) and [Don't Stop Me Now](https://open.spotify.com/track/5T8EDUDqKcs6OSOwEsfqG7?si=c365e244de0f4ca7) which all have a popularity of `r Dust$popularity`. Danceability and popularity seem to be correlated in Queen and Roger Taylor songs; the more danceable songs are also more popular. Within the songs of Freddie Mercury this pattern can not be found.
 
 **Instrumentalness**  
-As for instrumentalness, Spotify was not too precise, since the song with the highest score was [Seven Seas of Rhye](https://open.spotify.com/track/1IhLUUzMxDDJ9pzfT95exy?si=64be327348e141c3) which does have sung lyrics. The other songs at the top, though, are [The Ring (Hypnotic Seduction Of Dale)](https://open.spotify.com/track/5QTRYLNQY4eIiMCAwAUYpz?si=ff533253555347d4), [Vultan's Theme](https://open.spotify.com/track/5uJ6QwBbCSwomH4uUvG4Hp?si=66d18851eb714962), [God Save the Queen](https://open.spotify.com/track/2ISPUUp4pzssWuR2Ic09vR?si=daefd19a316d44bd) and [Escape From The Swamp](https://open.spotify.com/track/76nonU5KLNawCssAiENgGW?si=f1be613d64db4d1d) which are all completely instrumental. In the top 10 most instrumental songs, seven are from the album *Flash Gordon* which is an album made for the homonymous science fiction movie. (If you want to know more about this album, check the [Queen official site](https://www.queenonline.com/music).) It seems that the more instrumental a song is, the less popular it is on Spotify. There is one exception to this rule: *Another One Bites the Dust* is one of the most popular songs by Queen but has an instrumentalness of `r Dust$instrumentalness`. 
+As for instrumentalness, Spotify was not too precise, since the song with the highest score was [Seven Seas of Rhye](https://open.spotify.com/track/1IhLUUzMxDDJ9pzfT95exy?si=64be327348e141c3) which does have sung lyrics. The other songs at the top, though, are [The Ring (Hypnotic Seduction Of Dale)](https://open.spotify.com/track/5QTRYLNQY4eIiMCAwAUYpz?si=ff533253555347d4), [Vultan's Theme](https://open.spotify.com/track/5uJ6QwBbCSwomH4uUvG4Hp?si=66d18851eb714962), [God Save the Queen](https://open.spotify.com/track/2ISPUUp4pzssWuR2Ic09vR?si=daefd19a316d44bd) and [Escape From The Swamp](https://open.spotify.com/track/76nonU5KLNawCssAiENgGW?si=f1be613d64db4d1d) which are all completely instrumental. In the top 10 most instrumental songs, seven are from the album *Flash Gordon* which is an album made for the like-named science fiction movie. (If you want to know more about this album, check the [Queen official site](https://www.queenonline.com/music).) In the chromagram of the song [Ming's Theme](https://open.spotify.com/track/1kcsmxEal6ZbVF2N0FAVeT?si=1f141b030fe3472e) you will see how different these songs are from more typical Queen songs. It seems that the more instrumental a song is, the less popular it is on Spotify. There is one exception to this rule: *Another One Bites the Dust* is one of the most popular songs by Queen but has an instrumentalness of `r Dust$instrumentalness`. 
 
 **Valence**  
-The happiest song according to Spotify is [Misfire](https://open.spotify.com/track/1tLJMLavxD9KmeLTYeqnM8?si=0f18adba627b4756) by Queen. [Rain Must Fall](https://open.spotify.com/track/6jornLGJEzC3wFP2MFFvWg?si=811cc8228c3d4874) is following with only `r 0.001` points in difference. Both songs have a danceability score above the mean of `r Band$mean_danceability`. This seems to be fitting the norm; the happier a song is, the higher it rates on danceability. The lowest valence scores are from the songs [Ming's Theme](https://open.spotify.com/track/1kcsmxEal6ZbVF2N0FAVeT?si=1f141b030fe3472e) and *The Ring (Hypnotic Seduction Of Dale)* which also both are very instrumental. The next song with the lowest valence is a more typical song by the band, namely [Who Wants To Live Forever](https://open.spotify.com/track/3SGP8It5WDnCONyApJKRTJ?si=e1e6446a761646af). This song also has the lowest danceability score (`r Forever$danceability`).
+The happiest song according to Spotify is [Misfire](https://open.spotify.com/track/1tLJMLavxD9KmeLTYeqnM8?si=0f18adba627b4756) by Queen. [Rain Must Fall](https://open.spotify.com/track/6jornLGJEzC3wFP2MFFvWg?si=811cc8228c3d4874) is following with only `r 0.001` points in difference. Both songs have a danceability score above the mean of `r Band$mean_danceability`. This seems to be fitting the norm; the happier a song is, the higher it rates on danceability. The lowest valence scores are from the songs *Ming's Theme* and *The Ring (Hypnotic Seduction Of Dale)* which also both are very instrumental. The next song with the lowest valence is a more typical song by the band, namely [Who Wants To Live Forever](https://open.spotify.com/track/3SGP8It5WDnCONyApJKRTJ?si=e1e6446a761646af). This song also has the lowest danceability score (`r Forever$danceability`).
 
 ### Oldest Queen songs deviate the most from the mean tempo, their recording skills probably have improved a lot. {data-commentary-width=500}
 
@@ -678,7 +497,9 @@ TempoAnimated
 
 **Explanation**  
 Here you can see the mean tempo, the deviation of each song from that mean tempo, the loudness in opacity
-and the beats per measure signature in the size of the point. The biggest deviation can be found in the oldest Queen songs, as the darker points are at the top and brighter points are more toward the bottom, or in the songs with either a relatively slow or fast tempo. Older Queen songs were recorded using analog equipment, which may have had limitations in terms of capturing precise tempos. This could have led to more variation in tempo in their older recordings. It might also be, that the earlier songs were even more experimental than later songs and incorporated more styles that suited more tempo changes.
+and the beats per measure signature in the size of the point. The biggest deviation can be found in the oldest Queen songs, as the darker points are at the top and brighter points are more toward the bottom, or in the songs with either a relatively slow or fast tempo. Older Queen songs were recorded using analog equipment, which may have had limitations in terms of capturing precise tempos. This could have led to more variation in tempo in their older recordings. It might also be, that the earlier songs were even more experimental than later songs and incorporated more styles that suited more tempo changes. 
+
+The song with the highest deviation in tempo by Freddie Mercury is a more classical song he released together with the opera singer Montserrat Caballé. In the tempogram you will also see how hard it is to extract the tempo using computation.
 
 **Time signature**  
 Spotify API had a hard time with the songs [Execution of Flash](https://open.spotify.com/track/5EhUncBbxhp117MVVkH5zw?si=08577c080e854099) as well as [Ming's Theme](https://open.spotify.com/track/1kcsmxEal6ZbVF2N0FAVeT?si=cd926f1047284e20) by Queen because there is no consistent time signature. The album *Flash Gordon* once again stands out, both of these songs are part of it, and as you will see in the chromagram section, this is not a typical album. The song [Dear Friends](https://open.spotify.com/track/2P2DVfvkVlh317i9PhFQqF?si=fcf560100d514f87) by Queen also stands out; it states that there is only one beat per measure but when I listened to the song, I felt like the time signature was 4/4. I do have to say that the arrangement with the piano emphasized all beats very equally, that might be an explanation for the weird time signature.
@@ -769,56 +590,16 @@ comp |>
   ggplot(aes(x = basis, y = value, fill = category)) +
   geom_violin() +
   scale_fill_viridis_d() +
-  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Artist")
+  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Artist") +
+  theme_bw()
 ```
 
 ***
 
 **Explanation**  
-For every 12 levels of timbre used by Spotify API I have plotted the range for the songs by Freddie Mercury, the oldest songs by Queen (released around the year 1973) and the newest songs with Freddie Mercury still as lead singer (released around the year 1990). I am not sure I will keep this plot in, because I cannot see very interesting differences between the three categories.
+For every 12 levels of timbre used by Spotify API I have plotted the range for the songs by Freddie Mercury, the oldest songs by Queen (released around the year 1973) and the newest songs with Freddie Mercury still as lead singer (released around the year 1990). 
 
-### Testing animated plots so I probably don't need this plot anymore.
-```{r}
-MeanFreddie <- freddie %>%
-  group_by(track.album.release_date) %>%
-  summarise(mean_pop = mean(track.popularity), 
-            mean_danceability = mean(danceability),
-            mean_tempo = mean(tempo)) %>%
-  mutate(category = "Freddie Mercury")
-
-MeanQueen <- queen %>%
-  group_by(track.album.release_date) %>%
-  summarise(mean_pop = mean(track.popularity), 
-            mean_danceability = mean(danceability),
-            mean_tempo = mean(tempo)) %>%
-  mutate(category = "Queen")
-
-MeanRoger <- roger %>%
-  group_by(track.album.release_date) %>%
-  summarise(mean_pop = mean(track.popularity), 
-            mean_danceability = mean(danceability),
-            mean_tempo = mean(tempo)) %>%
-  mutate(category = "Roger Taylor")
-
-Total <- rbind(MeanFreddie, MeanQueen, MeanRoger)
-
-Test <- Tempo %>%
-  plot_ly(x = ~tempo_section_mean, y = ~tempo_section_sd, size = ~danceability, color = ~track.album.release_date,
-    hoverinfo = "text", text = paste("Track: ", Tempo$track, "<br>",
-                                   "Artist: ", Tempo$category, "<br>",
-                                   "Release Date: ", Tempo$track.album.release_date, "<br>",
-                                   "Tempo: ", Tempo$tempo_section_mean)) %>%
-  add_text(x = 150, y = 40, text = ~category, id = ~1, frame = ~category,
-           textfont = list(size = 20, color = toRGB("gray80"))) %>%
-  add_markers(frame = ~category) %>%
-  layout(title = 'Tempo for Each Artist', xaxis = list(title = "Mean Tempo (bpm)"), yaxis = list(title = 'SD Tempo'), showlegend = FALSE) %>%
-  animation_opts(frame = 2000, 
-                 transition = 1500,
-                 easing = "linear") %>%
-  animation_slider(hide = TRUE)
-
-TempoPlotly
-```
+According to the clusters, some of the timbre levels should be very distinct between the three categories I plotted. For example, from most useful to less useful, level 4, 12, 3 and 1.
 
 
 Chromagram {.storyboard}
@@ -1192,7 +973,7 @@ Coincidentally, this song is also not written by Freddie Mercury but by Brian Ma
 
 <iframe src="https://open.spotify.com/embed/playlist/2POKY9r3mluVe4rkDzS0AA?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
 
-### Other matrices and the conclusion. {data-commentary-width=350}
+### Queen songs can be structured, but they find a way to still make the song interesting. {data-commentary-width=350}
 
 ```{r, fig.width=12, fig.height=9}
 innuendo <-
@@ -1287,13 +1068,101 @@ LoveKillsPlot <- bind_rows(
   #theme(plot.title = element_text(size = 9)) +
   labs(x = "", y = "", title = "Love Kills - Freddie Mercury")
 
-grid.arrange(InnuendoPlot, LoveKillsPlot, ncol = 1)
+grid.arrange(LoveKillsPlot, InnuendoPlot, ncol = 1)
 ```
 
 ***
 **Conclusion**  
-Once again [this electronic dance song](https://open.spotify.com/track/1cApo5IeHOea0dD3Cs3QMB?si=3ebba557323543ea) by Freddie Mercury shows a noticeable structure with some diagonal lines indicating repetition. The song [Innuendo](https://open.spotify.com/track/0BzhS74ByIVlyz8BedHaYi?si=4e3f4a5eac6149f9) by Queen, on the other hand, shows a very nice pattern at the beginning and end, but there is a very different part in the middle. I think this is a good summary of Queen; some song will have a clear structure but they will always find a way to still make the song interesting, whereas Freddie Mercury's songs are sometimes a little more simple and rhythmical. I also wanted to note that besides the structure of the song by Queen, the vocal performance is also very impressive which is typical for Freddie Mercury in general. "[Innuendo] would prove to be the last album Freddie worked upon and yet also, despite his palpably deteriorating health, a work containing some of his most powerful and emotive vocal performances of all." as [Queen said themselves](https://www.queenonline.com/music). Definitely have a listen if you are not familiar with the song!
+Once again [this electronic dance song](https://open.spotify.com/track/1cApo5IeHOea0dD3Cs3QMB?si=3ebba557323543ea) by Freddie Mercury shows a noticeable structure with some diagonal lines indicating repetition, here of the chorus. 
 
+The song [Innuendo](https://open.spotify.com/track/0BzhS74ByIVlyz8BedHaYi?si=4e3f4a5eac6149f9) by Queen, on the other hand, shows a very nice checkered pattern at the beginning and end, but there is a very different part in the middle. I think this is a good summary of Queen; some song will have a clear structure but they will always find a way to still make the song interesting, whereas Freddie Mercury's songs are sometimes a little more simple and rhythmical. I also wanted to note that besides the structure of the song by Queen, the vocal performance is also very impressive which is typical for Freddie Mercury in general. "[Innuendo] would prove to be the last album Freddie worked upon and yet also, despite his palpably deteriorating health, a work containing some of his most powerful and emotive vocal performances of all." as [Queen said themselves](https://www.queenonline.com/music). Definitely have a listen if you are not familiar with the song!
+
+Tempo {.storyboard}
+=========================================
+
+### The seemingly structured song *Innuendo* (according to the self-similarity matrices) has a difficult tempo to detect. {data-commentary-width=450}
+
+```{r}
+readRDS("InnuendoTempogram")
+```
+
+***
+
+**Tempogram**  
+A tempogram shows for every possible tempo how well it matches with the song. A good match turns up bright yellow and everywhere you see dark blue, the tempo does not lign up with the song.
+
+**Explanation**  
+In the self-similarity matrices I ended with the song [Innuendo](https://open.spotify.com/track/0BzhS74ByIVlyz8BedHaYi?si=0a5663f08a594ea0) by Queen. Even though the song has a very clear drum and rhythm, the drum does make use of triplets which probably makes it more difficult to detect a uniform tempo. When the very contrasting bridge starts (at around 2:45), they start with a low energy guitar with hints of flamenco along with soft vocals by Freddie Mercury. In this section the rhythm sometimes slows down or speeds up to match the dynamics of the vocals and other instruments, also known as rubato. Despite the fluctuation in tempo, this section does seem to have a lower tempo which can also be seen in the figure (there are more bright yellow bits between 80 and 120 BPM then before). Just before the 200 seconds mark, the speed picks up and you hear guitar and clapping. Brian May incorporates Spanish guitar techniques such as tremolo picking and arpeggios, which are commonly found in Mediterranean and flamenco music. Flamenco music is also very rhythmic; as you can see in the graph, this part has a much clearer tempo though still not a very consistent tempo. Another section starts at around 236 seconds, which is a sort of classical, operatic, walz part.  
+This tempogram shows that despite the seemingly clear structure the song has according to the self-similarity matrices, there is definitely a lot going on in terms of rhythm and tempo.
+
+### The song that was written by Roger Taylor has a clearer tempo in the tempogram. 
+
+```{r}
+CarTempogram <- readRDS("CarTempogram")
+CarTempogram
+```
+
+***
+**Explanation**  
+[This](https://open.spotify.com/track/253ewjP2R1LjKqA70mGdnk?si=eb97228f37284740) clearly structured song (as could be seen in the self-similarity matrices) written by Roger Taylor has faintly more of a clear tempo. The uptempo rock song has a driving rhythm and features Taylor's vocals and a prominent guitar riff from Brian May. The lyrics are about Taylor's love for his car and as I said before, the song also includes some car sounds, but that did not change the accuracy of the tempogram.
+
+As you shall see, the tempo might be more clear than the tempo in the previous song because the song is more focused on the percussion, but it is certainly not as unambigious as the following electronic songs by Freddie Mercury.
+
+
+### The disco songs by Freddie Mercury are much easier to plot in a tempogram. 
+
+```{r}
+Kills <- readRDS("LoveKillsTempogram")
+Living <- readRDS("LivingOwnTempogram")
+Born <- readRDS("BornTempogram")
+Lover <- readRDS("YourKindofLoverTempogram")
+
+grid.arrange(Kills, Living, Born, Lover, ncol = 2)
+```
+
+***
+
+**Explanation**  
+All these songs are solo songs by Freddie Mercury. The bottom two are part of the album *Mr. Bad Guy*, the other two are singles. The songs are very electronic and disco inspired. As [Freddie Mercury said himself](http://www.freddiemercury.com/en/archive#mr_bad_guy): "I wanted to cover such things as reggae rhythms and I’ve done a couple of things with a symphony orchestra. It has a very rich sound and it’s very beat orientated." Electronic, beat orientated songs such as these four are very likely to have a clearly visible tempo. Thus, I was also curious about a very different song, namely *Barcelona*, which you will see in the next tab.
+
+### The song *Barcelona* by Freddie Mercury and opera singer Montserrat Caballé is all over the place tempo wise. 
+
+```{r}
+readRDS("BarcelonaTempogramCyc")
+```
+
+***
+**Explanation**  
+The song [Barcelona](https://open.spotify.com/track/3BdId1EhcMX7yAzwzQJLAD?si=7cee17fa0b0943e7) is very "un-rock ’n’ roll" as Freddie Mercury stated himself, just like the rest of the album. It "really required a lot of discipline" and "[the] ideas [...] underwent significant changes along the road to perfection." ([Freddie Mercury's official site](http://www.freddiemercury.com/en/archive#Barcelona_original)). In other words, Freddie Mercury put a lot of time and effort in the songs on the album *Barcelona* to create something really unique. The album incorporates lots of classical elements with more traditional pop characteristics. Classical music often features multiple layers of melody and rhythm that interact in complex ways, and this can make it difficult to separate out the different elements of the music and plot them in a coherent tempogram. This can be seen in the tempogram of the song *Barcelona*.
+
+
+### The distribution of tempi for each artist deviates from the preferred tempo. {data-commentary-width=450}
+
+```{r}
+TempiPlot <- ggplot(Comparison2, aes(tempo, fill = category, text = paste("Artist: ", category, "<br>",
+                                                                          "Tempo: ", tempo, "<br>", 
+                                                                          "Album: ", track.album.name))) +
+  geom_histogram(binwidth = 5) +
+  scale_fill_manual(values=safe_palette) +
+  annotate("text", x = 5, y = 2, label = "Yeah - Queen", size = 3) +
+  annotate("text", x = 202.5, y = 4, label = "My Life Has", size = 3) +
+  annotate("text", x = 202.5, y = 3, label = "Been Saved", size = 3) +
+  annotate("text", x = 202.5, y = 2, label = "- Queen", size = 3) +
+  labs(title = "Distribution of Tempi", x = "Tempo", y = "Frequency", fill = "Artist", fontface = "bold", size = 2) +
+  theme_bw() +
+  theme(axis.ticks.x = element_blank(), axis.ticks.y = element_blank())
+
+ggplotly(TempiPlot, tooltip = "text")
+```
+
+***
+**Conclusion**  
+Interestingly, even though according to [Dirk Moelants (2002)](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0762d815903c643b587250cfc1f4659c9da9c4a5) the preferred tempo is between 120 and 130 beats per minute (BPM), in this plot you can see that most songs are around 80 BPM. This is relatively slow and specially for the many disco inspired songs by Freddie Mercury. The most frequent tempo is around 110 BPM for Queen, and 160 BPM for Roger Taylor, but Queen has a more normal distribution and the drummer's songs are very evenly distributed.
+
+I think we can say that Queen songs are overall a little hard to plot in a tempogram (which also ties back to the amount of standard deviation in the general tempo plot) while Freddie Mercury songs either have a very easy tempo to detect, as in his electronic disco songs, or songs in which the tempo is more complicated to plot in a tempogram, such as the more classical songs.  
+
+**Reference**  
+Moelants, D. (2002). Preferred tempo reconsidered. C. Stevens, D. Burnham, G. McPherson, E. Schubert, J. Renwick (Eds.), *Proceedings of the 7th International Conference on Music Perception and Cognition*. Sydney, Adelaide, Causal Productions, 580–583.
 
 Chords {.storyboard}
 =========================================
@@ -1513,7 +1382,7 @@ grid.arrange(TimePlot, LovePlot, ncol = 1)
 
 ***
 (I have to shorten this explanation)  
-**Explanation**  
+**Chordogram**  
 These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
 
 The two songs are, in my opinion, quite similar in style. Both ballads have intricate piano arrangements and are a little more stripped down compared to the rest of the discography. That is why I thought it would be interesting to see how the chordograms compared to one another. 
@@ -1623,62 +1492,538 @@ ggplotly(KeysPlot, tooltip = "text")
 **Numbers of Tracks per Artist**  
 `r NTracks %>% knitr::kable()`
 
+
 Clusters {.storyboard}
 =========================================
 
-### Trying to cluster
+### Freddie Mercury produced operatic pop, electronic disco and experimental pop music. {data-commentary-width=450}
 
-```{r}
-Comparison3 <- Comparison2 %>% select(danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, track.duration_ms, popularity)
-# Initialize total within sum of squares error: wss
-wss <- 0
+```{r, fig.width=10}
+freddie <-
+  get_playlist_audio_features("", "7IXPxFygCKwBEklOVopUu8") |>
+  add_audio_analysis() |>
+  mutate(
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean"
+      )
+  ) |>
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
+  mutate_at(vars(pitches, timbre), map, bind_rows) |>
+  unnest(cols = c(pitches, timbre))
 
-# Look over 1 to 15 possible clusters
-for (i in 1:15) {
-  # Fit the model: km.out
-  artists.out <- kmeans(Comparison3, centers = i, nstart = 20, iter.max = 50)
-  # Save the within cluster sum of squares
-  wss[i] <- artists.out$tot.withinss
-}
+freddie$album.name = c("Cover", "For Musical", "First solo release", "Barcelona", "Single", "Mr. Bad Guy", "Barcelona", "Single", "Mr. Bad Guy", "Mr. Bad Guy", "Barcelona", "Barcelona", "Mr. Bad Guy", "Single", "Single", "Single", "Mr. Bad Guy", "Mr. Bad Guy", "Mr. Bad Guy", "Mr. Bad Guy", "Mr. Bad Guy", "Mr. Bad Guy", "Barcelona", "Barcelona", "Barcelona")
 
-# Produce a scree plot
-# plot(1:15, wss, type = "b", 
-#     xlab = "Number of Clusters", 
-#     ylab = "Within groups sum of squares")
+freddie_juice <-
+  recipe(
+    track.name ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration,
+    data = freddie
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors()) |> 
+  # step_range(all_predictors()) |> 
+  prep(freddie |> mutate(track.name = str_trunc(track.name, 20))) |>
+  juice() |>
+  column_to_rownames("track.name")
 
-# Select number of clusters
-k <- 3
+freddie_dist <- dist(freddie_juice, method = "manhattan")
 
-# Build model with k clusters: km.out
-artists.out <- kmeans(Comparison3, centers = 3, nstart = 20, iter.max = 50)
+data_for_freddie_clustering <- freddie_dist |> 
+  hclust(method = "complete") |> # average for a balanced tree!
+  dendro_data() 
 
-# View the resulting model
-# artists.out
+playlist_data_for_join <- freddie %>%
+  select(track.name, album.name) %>%
+  mutate(label = str_trunc(track.name, 20))
 
-# Plot of Defense vs. Speed by cluster membership
-plot(Comparison3[, c("danceability", "energy")],
-     col = artists.out$cluster,
-     main = paste("k-means clustering of all songs with", k, "clusters"),
-     xlab = "Danceability", ylab = "Energy")
-ggplot(Comparison2, aes(danceability, energy, color = category)) +
-  geom_point(shape = 21)
+data_for_freddie_clustering$labels <- data_for_freddie_clustering$labels %>%
+  left_join(playlist_data_for_join)
+
+# Add factor so can use colouring! 
+data_for_freddie_clustering$labels$label <- factor(data_for_freddie_clustering$labels$label)
+
+treeFreddieColor <- data_for_freddie_clustering |>
+  ggdendrogram() +
+  geom_text(data = label(data_for_freddie_clustering), aes(x, y, 
+                                   label=label, 
+                                   hjust=0, 
+                                   colour=album.name), size=3) +
+  coord_flip() + 
+  scale_color_viridis_d() +
+  scale_y_reverse(expand=c(0.2, 0)) +
+  theme(axis.line.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.title.y=element_blank(),
+        panel.background=element_rect(fill="white"),
+        panel.grid=element_blank()) +
+  labs(title = "Freddie Mercury Clustering") +
+  guides(
+    colour = guide_legend(
+      title = "Playlist"
+    )
+  )
+treeFreddieColor
 ```
 
-Conclusion
+***
+**Dendrogram**  
+In a dendrogram, items that are the most similar get clustered together. The longer the paths and thus the further the connection, the less similar the items or clusters are. I have used all features that are within the Spotify API to cluster Freddie Mercury's solo songs.
+
+**Freddie Mercury**  
+I like how you can see the more classical songs, the electronic disco songs and the remaining songs clustered. Each album seems to have their own distinct sound. [She Blows Hot and Cold](https://open.spotify.com/track/6I3giXXPjsOXDWz5CF2q2D?si=686476eb612f46bf) stands out, it is kind of the only outlier. It is much more generic pop-rock and definitely not like the electronic songs on the *Mr. Bad Guy* album. The song [In my Defence](https://open.spotify.com/track/04L5RyQCKOerOiBCjhT66T?si=75047a0784bb4326) was not written by Freddie Mercury. Dave Clark wrote it for the musical Time but the song still suits the singer very well. I am not surprised it was clustered together with the song [Made in Heaven](https://open.spotify.com/track/54duq94ybKaMCB5Fj2UciX?si=b4d1a06b16054667), as this is as much of a grand, theatrical and powerful song. 
+
+**Queen and Roger Taylor**  
+I have also checked the clusters of Roger Taylor and Queen - because of the big amount of tracks, both are very cluttered and thus I decided not to include them - which had much less clear clusters than the dendrogram of Freddie Mercury. However, one album by Queen very much stood out; *Flash Gordon* was almost completely isolated from the rest of the tracks. The two most similar songs by Queen were *These are the Days of our Lives* and
+*Delilah*. After listening to the songs, I can see the similarity in timbre but not much further than that. The two songs *'39* and *Leaving Home Ain't Easy* were also clustered together. Both songs are written and sung by Brian May and have a lot of country influences. 
+
+
+### Clustering early Queen, late Queen and Freddie Mercury leads to three main clusters. 
+
+```{r, fig.height=8, fig.width=10}
+queen <- get_playlist_audio_features("", "3FOkKYT1wXXJH8L2lcSP5t")
+
+freddie <- get_playlist_audio_features("", "7IXPxFygCKwBEklOVopUu8")
+
+Comparison4 <-
+  bind_rows(
+    freddie |> mutate(artist = "Freddie Mercury") |> slice_head(n = 25),
+    queen |> mutate(artist = "Queen 1973") |> slice_head(n = 25), 
+    queen |> mutate(artist = "Queen 1990") |> tail(n = 25)
+  ) |> 
+  add_audio_analysis()
+
+Comparison4[35, "track.name"] = "First Seven Seas Of Rhye - Remastered 2011"
+
+## specially for clustering, be more specific in the recipe
+comparison_juice <-
+  recipe(
+    track.name ~ # label you want to predict, in clustering that is always tracks
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration,
+      #C + `C#|Db` + D + `D#|Eb` +
+      #E + `F` + `F#|Gb` + G +
+      #`G#|Ab` + A + `A#|Bb` + B +
+      #c01 + c02 + c03 + c04 + c05 + c06 +
+      #c07 + c08 + c09 + c10 + c11 + c12,
+    data = Comparison4
+  ) |>
+  step_center(all_predictors()) |> 
+  step_scale(all_predictors()) |>    #leads to Z score, with euclidean in dist()
+  #step_range(all_predictors()) |>  #clamps between 0 and 1, then with manhattan distance in dist()
+  prep(Comparison4 |> mutate(track.name = str_trunc(track.name, 20))) |> #cuts track names to 20 characters
+  juice() |>
+  column_to_rownames("track.name")
+
+# computing distances
+comparison_dist <- dist(comparison_juice, method = "manhattan")
+
+data_for_comp_clustering <- comparison_dist |> 
+  hclust(method = "complete") |> # average for a balanced tree!
+  dendro_data() 
+
+playlist_data_for_join <- Comparison4 %>%
+  select(track.name, artist) %>%
+  mutate(label = str_trunc(track.name, 20))
+
+data_for_comp_clustering$labels <- data_for_comp_clustering$labels %>%
+  left_join(playlist_data_for_join)
+
+# Add factor so can use colouring! 
+data_for_comp_clustering$labels$label <- factor(data_for_comp_clustering$labels$label)
+
+treeCompColor <- data_for_comp_clustering |>
+  ggdendrogram() +
+  geom_text(data = label(data_for_comp_clustering), aes(x, y, 
+                                   label=label, 
+                                   hjust=0, 
+                                   colour=artist), size=3) +
+  coord_flip() + 
+  scale_color_viridis_d() +
+  scale_y_reverse(expand=c(0.2, 0)) +
+  theme(axis.line.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.title.y=element_blank(),
+        panel.background=element_rect(fill="white"),
+        panel.grid=element_blank()) +
+  labs(title = "Artist Clustering") +
+  guides(
+    colour = guide_legend(
+      title = "Artist"
+    )
+  )
+treeCompColor
+
+```
+
+***
+**Explanation**  
+In this dendrogram you can find all 25 tracks by Freddie Mercury I put in the playlist compared to the first and last 25 songs by Queen using all the features Spotify API has to offer. 
+
+*Brighton Rock* looks a bit like an outlier, as well as *Procession* (both . But overall, most Freddie Mercury songs are clustered together and the earlier Queen songs too. The oldest Queen songs are a bit mixed together with Freddie Mercury solo songs. 
+
+**Conclusion**  
+I have to write this.
+
+
+Classification {.storyboard}
+=========================================
+
+### Telling Freddie Mercury apart from Queen is not very hard. 
+
+```{r}
+# classifier
+freddie <- get_playlist_audio_features("spotify", "7IXPxFygCKwBEklOVopUu8")
+queen <- get_playlist_audio_features("spotify", "3FOkKYT1wXXJH8L2lcSP5t")
+roger <- get_playlist_audio_features("spotify", "7eYTx9OtJPrKBst4bWr3PD")
+after <- get_playlist_audio_features("spotify", "2Oou3UXp7fHZsHHxQ9jQnC")
+
+# toevoegen |> slice_head(n = 20)
+Comparison4 <-
+  bind_rows(
+    freddie |> mutate(artist = "Freddie Mercury") |> slice_head(n = 25),
+    queen |> mutate(artist = "Queen 1973") |> slice_head(n = 25), 
+    queen |> mutate(artist = "Queen 1990") |> tail(n = 25)
+  ) |> 
+  add_audio_analysis()
+
+comp_features <-
+  Comparison4 |>  # For your portfolio, change this to the name of your corpus.
+  mutate(
+    artist = factor(artist),
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(
+        segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean",
+      )
+  ) |>
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
+  mutate_at(vars(pitches, timbre), map, bind_rows) |>
+  unnest(cols = c(pitches, timbre))
+
+comp_recipe <-
+  recipe(
+    artist ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      #acousticness +
+      #instrumentalness +
+      #liveness +
+      #valence +
+      #tempo +
+      duration,
+      #C + `C#|Db` + D + `D#|Eb` +
+      #E + `F` + `F#|Gb` + G +
+      #`G#|Ab` + A + `A#|Bb` + B +
+      #c01 + c02 + c03 + c04 + c05 + c06 +
+      #c07 + c08 + c09 + c10 + c11 + c12,
+    data = comp_features           # Use the same name as the previous block.
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors())      # Converts to z-scores.
+  # step_range(all_predictors())    # Sets range to [0, 1].
+
+comp_cv <- comp_features |> vfold_cv(5)
+
+knn_model <-
+  nearest_neighbor(neighbors = 1) |>
+  set_mode("classification") |> 
+  set_engine("kknn")
+comp_knn <- 
+  workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(knn_model) |> 
+  fit_resamples(comp_cv, control = control_resamples(save_pred = TRUE))
+
+get_conf_mat <- function(fit) {
+  outcome <- .get_tune_outcome_names(fit)
+  fit |> 
+    collect_predictions() |> 
+    conf_mat(truth = outcome, estimate = .pred_class)
+}  
+
+get_pr <- function(fit) {
+  fit |> 
+    conf_mat_resampled() |> 
+    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |> 
+    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |> 
+    ungroup() |> filter(Prediction == Truth) |> 
+    select(class = Prediction, precision, recall)
+} 
+
+#comp_knn |> get_conf_mat()
+comp_knn |> get_conf_mat() |> autoplot(type = "heatmap")
+
+```
+
+***
+**Confidence matrix**  
+Based on the features danceability, energy, loudness, speechiness and duration, the computer tried to make a model to predict whether a song was by Freddie Mercury, early Queen or late Queen. These features were the most important besides some timbre features. I once again put in all 25 songs by Freddie Mercury and the first and last 25 songs by Queen. Here you can see how well the model did; the number in the cells show for every combination (the three true categories and how the three categories were predicted) how often this was the case. For example, for every song by Freddie Mercury, the model predicted 20 times correctly and only once that is was an early Queen song and four times that is was a late Queen song. Classifying Freddie Mercury seems to be the easiest. But both the earliest and latest songs by Queen were apparently also not too hard to classify, since the model predicted most songs right. This could also be expected based on how the dendrogram on the previous page already seemed to cluster most of the songs by artist somewhat right. 
+
+
+### Plot
+
+```{r}
+library(ranger)
+forest_model <-
+  rand_forest() |>
+  set_mode("classification") |> 
+  set_engine("ranger", importance = "impurity")
+comp_forest <- 
+  workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(forest_model) |> 
+  fit_resamples(
+    comp_cv, 
+    control = control_resamples(save_pred = TRUE)
+  )
+features <- workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(forest_model) |> 
+  fit(comp_features) |> 
+  pluck("fit", "fit", "fit") |>
+  ranger::importance() |> 
+  enframe() |> 
+  mutate(name = fct_reorder(name, value)) |> 
+  ggplot(aes(name, value)) + 
+  geom_col() + 
+  coord_flip() +
+  theme_minimal() +
+  labs(x = NULL, y = "Importance")
+
+Plot <- comp_features |>
+  ggplot(aes(x = c04, y = loudness, colour = artist, size = danceability, text = track.name, alpha = speechiness)) +
+  geom_point(alpha = 0.8) +
+  scale_color_viridis_d() +
+  labs(
+    title = "Distribution over Most Important Features", 
+    x = "Timbre Component 4",
+    y = "Loudness",
+    size = "Danceability",
+    colour = "Artist", 
+    alpha = "Speechiness"
+  ) +
+  theme_bw()
+ggplotly(Plot, tooltip = "text")
+```
+
+***
+**Explanation**  
+The most important feature to tell Freddie Mercury apart from Queen is timbre level 4, which shows the difference between the beginning and end of .... Outside of the timbre features, loudness, danceability and speechiness were most important.
+...
+
+
+### Classifying Queen after the death of Freddie Mercury is much harder. 
+
+```{r}
+# classifier
+freddie <- get_playlist_audio_features("spotify", "7IXPxFygCKwBEklOVopUu8")
+queen <- get_playlist_audio_features("spotify", "3FOkKYT1wXXJH8L2lcSP5t")
+roger <- get_playlist_audio_features("spotify", "7eYTx9OtJPrKBst4bWr3PD")
+after <- get_playlist_audio_features("spotify", "2Oou3UXp7fHZsHHxQ9jQnC")
+
+# toevoegen |> slice_head(n = 20)
+comp <-
+  bind_rows(
+    freddie |> mutate(artist = "Freddie Mercury") |> slice_head(n = 25),
+    queen |> mutate(artist = "Queen 1973") |> slice_head(n = 25), 
+    queen |> mutate(artist = "Queen 1990") |> tail(n = 25), 
+    roger |> mutate(artist = "Roger Taylor") |> slice_head(n = 25), 
+    after |> mutate(artist = "Queen after Freddie")
+  ) |> 
+  add_audio_analysis()
+
+comp_features <-
+  comp |>  # For your portfolio, change this to the name of your corpus.
+  mutate(
+    artist = factor(artist),
+    segments = map2(segments, key, compmus_c_transpose),
+    pitches =
+      map(
+        segments,
+        compmus_summarise, pitches,
+        method = "mean", norm = "manhattan"
+      ),
+    timbre =
+      map(
+        segments,
+        compmus_summarise, timbre,
+        method = "mean",
+      )
+  ) |>
+  mutate(pitches = map(pitches, compmus_normalise, "clr")) |>
+  mutate_at(vars(pitches, timbre), map, bind_rows) |>
+  unnest(cols = c(pitches, timbre))
+
+comp_recipe <-
+  recipe(
+    artist ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration +
+      C + `C#|Db` + D + `D#|Eb` +
+      E + `F` + `F#|Gb` + G +
+      `G#|Ab` + A + `A#|Bb` + B +
+      c01 + c02 + c03 + c04 + c05 + c06 +
+      c07 + c08 + c09 + c10 + c11 + c12,
+    data = comp_features           # Use the same name as the previous block.
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors())      # Converts to z-scores.
+  # step_range(all_predictors())    # Sets range to [0, 1].
+
+comp_cv <- comp_features |> vfold_cv(5)
+
+knn_model <-
+  nearest_neighbor(neighbors = 1) |>
+  set_mode("classification") |> 
+  set_engine("kknn")
+comp_knn <- 
+  workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(knn_model) |> 
+  fit_resamples(comp_cv, control = control_resamples(save_pred = TRUE))
+
+get_conf_mat <- function(fit) {
+  outcome <- .get_tune_outcome_names(fit)
+  fit |> 
+    collect_predictions() |> 
+    conf_mat(truth = outcome, estimate = .pred_class)
+}  
+
+get_pr <- function(fit) {
+  fit |> 
+    conf_mat_resampled() |> 
+    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |> 
+    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |> 
+    ungroup() |> filter(Prediction == Truth) |> 
+    select(class = Prediction, precision, recall)
+} 
+
+#comp_knn |> get_conf_mat()
+comp_knn |> get_conf_mat() |> autoplot(type = "heatmap")
+
+```
+
+***
+**Explanation**  
+I also wanted to know whether Roger Taylor could be as easily classified as Freddie Mercury and the band. Once again, Freddie Mercury was classified very well and the same holds for early Queen. Later Queen and Roger Taylor were a little less accurately classified, but not nearly as bad as Queen after the death of the singer. The few songs that were released in honor of Freddie Mercury have more in common with the solo songs by both Freddie Mercury and Roger Taylor than the songs by Queen as a band. ...
+
+
+### Plot
+
+```{r}
+library(ranger)
+forest_model <-
+  rand_forest() |>
+  set_mode("classification") |> 
+  set_engine("ranger", importance = "impurity")
+comp_forest <- 
+  workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(forest_model) |> 
+  fit_resamples(
+    comp_cv, 
+    control = control_resamples(save_pred = TRUE)
+  )
+features <- workflow() |> 
+  add_recipe(comp_recipe) |> 
+  add_model(forest_model) |> 
+  fit(comp_features) |> 
+  pluck("fit", "fit", "fit") |>
+  ranger::importance() |> 
+  enframe() |> 
+  mutate(name = fct_reorder(name, value)) |> 
+  ggplot(aes(name, value)) + 
+  geom_col() + 
+  coord_flip() +
+  theme_minimal() +
+  labs(x = NULL, y = "Importance")
+
+Plot <- comp_features |>
+  ggplot(aes(x = c09, y = c04, colour = artist, size = loudness, text = track.name)) +
+  geom_point(alpha = 0.8) +
+  scale_color_viridis_d() +
+  labs(
+    title = "Distribution over Most Important Features", 
+    x = "Timbre Component 9",
+    y = "Timbre Component 4",
+    size = "Loudness",
+    colour = "Artist"
+  ) +
+  theme_bw()
+ggplotly(Plot, tooltip = "text")
+```
+
+***
+**Explanation**  
+In terms of timbre, the groups are quite distinguishable as you can see in the plot and in the former tab. What this exactly means is very hard to say. 
+
+**Conclusion**  
+Will write this.
+
+
+Conclusion {data-icon="ion-android-bulb"}
 =========================================
 
 Column {data-width=400}
 -------------------------------------
 
-### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury. A legend he is and here is why.
+### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury.
 
 `r knitr::include_graphics(logo)`
 
 Column {data-width=600}
 -------------------------------------
 
-### Conclusion
+### A legend he is and here is why.
 
-From the plots that I made we can already see that there is a lot of overlap between the songs by Freddie Mercury and the band Queen. Nevertheless, Queen has much more popular songs than Freddie Mercury as a solo artist. The popular songs are mostly happy, danceable and include lyrics. Queen has made use of complex harmonies and the songs are high in energy. Freddie Mercury's songs are also complex but not all popular ones are also danceable. 
+I expected lots of similarities between the songs by Freddie Mercury and the band Queen; catchy hooks and melodies, dramatic and energetic vocal arrangements. But I also anticipated Queen having more complex and grandiose songs while Freddie Mercury's discography would probably be more stripped down and focused on vocals, piano and danceability.
 
-I will look more into durational features in the next couple of weeks as rhythm is a big part of what is  characteristic to disco music. Disco music was beloved by Freddie Mercury, but not by the other three band members. Thus, I am curious to see whether there is a difference that could help explain the distinction between the band Queen and Freddie Mercury.
+From the plots that I made we can see that there is a lot of overlap. Nevertheless, Queen has much more popular songs than Freddie Mercury as a solo artist, which are mostly upbeat, danceable and include lyrics. Queen incorporates complex harmonies within the high energy songs. Freddie Mercury's songs are also sophisticated but not all popular songs are also danceable. Both queen and Freddie Mercury in his solo career were trying to explore new styles and tried to step out of the box. While Queen did that even within a single song, Freddie Mercury did that more so across his different albums. In other words, opera, rock, pop and electronic music are all part of their styles, but Queen combined them all at once and one of their most popular songs is a great example of that, *Bohemian Rhapsody*. The singer separated them more; the disco music, with elements of electronic and synth-pop music can be found on his album *Mr. Bad Guy* and the theatrical, operatic and classical style with hints of pop and rock on the following album *Barcelona*. 
+
+Queen, of course, did not only consist of the singer Freddie Mercury. The other band members brought their own unique musical influences and perspectives to the creative processes. Songs by Roger Taylor for example were characterized by a more rock-oriented sound and clearer structure, with an emphasis on percussion. Brian May incorporated elements of country and folk music into the mix. Each member brought their own musical expertise and interests to the band, resulting in a diverse range of styles and sounds in their music. The collaborative nature of the band allowed for the integration of each member's musical ideas, ultimately leading to their distinctive sound and success as a group.
