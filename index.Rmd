@@ -81,7 +81,7 @@ In addition, I have created a small playlist (N = 13) with the songs that were r
 
 The playlist of songs by Roger Taylor consists of 44 songs from four different albums. 
 
-Song list 1.1: Special Editions
+*Song list 1.1: Special Editions Freddie Mercury*
 
   - Foolin' Around
   - Your Kind of Lover
@@ -89,13 +89,13 @@ Song list 1.1: Special Editions
   - Man Made Paradise
   - There Must Be More to Life Than This
 
-Song list 1.2: New Orchestrated Editions
+*Song list 1.2: New Orchestrated Editions Freddie Mercury*
 
   - La Japonaise
   - Ensueño
   - Guide Me Home
 
-Song list 2.1
+*Song list 2.1: Outliers Queen*
 
   - Ming's Theme
   - The Ring
@@ -591,7 +591,8 @@ comp |>
   geom_violin() +
   scale_fill_viridis_d() +
   labs(x = "Spotify Timbre Coefficients", y = "", fill = "Artist") +
-  theme_bw()
+  theme_bw() +
+  theme(legend.position = "bottom")
 ```
 
 ***
@@ -599,8 +600,11 @@ comp |>
 **Explanation**  
 For every 12 levels of timbre used by Spotify API I have plotted the range for the songs by Freddie Mercury, the oldest songs by Queen (released around the year 1973) and the newest songs with Freddie Mercury still as lead singer (released around the year 1990). 
 
-According to the clusters, some of the timbre levels should be very distinct between the three categories I plotted. For example, from most useful to less useful, level 4, 12, 3 and 1.
+According to the clusters, some of the timbre levels should be very distinct between the three categories I plotted. For example, from most useful to less useful, the levels 4, 12, 3 and 1 should be quite different. Unfortunately, timbre is a very abstract term to talk about music. According to Jehan (2014) timbre "is the quality of a musical note or sound that distinguishes different types of musical instruments, or voices." Spotify uses 12 different levels to quantify timbre, the first of which is easy to understand, but that goes down very quickly. Level 1 represents the average loudness of a section and the second level calculates the difference in energy between lower and higher frequencies (this should represent the brightness, which is already much less concrete). The next dimension does this for the mid-frequencies (which should correlate to the flatness of the sound) and the fourth represents the energy of the attacks (the beginning of sounds).  
+*(I still have to write a conclusion.)*
 
+**Reference**  
+Jehan, T., DesRoches, D. (2014). Analyzer documentation (analyzer version 3.2). Accessed 27 Mar. 2023
 
 Chromagram {.storyboard}
 =========================================
@@ -1381,7 +1385,7 @@ grid.arrange(TimePlot, LovePlot, ncol = 1)
 ```
 
 ***
-(I have to shorten this explanation)  
+*(I have to shorten this explanation)*  
 **Chordogram**  
 These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
 
@@ -1419,7 +1423,7 @@ RhapsodyChordPlot
 Since *Bohemian Rhapsody* is such a complex song, I wondered what it would look like in a chordogram. I will also still take a look at it in more detail.
 
 **Conclusion**  
-
+*(Still have to write this.)*
 
 Keys {.storyboard}
 =========================================
@@ -1489,6 +1493,9 @@ Interestingly, the key G major was very loved by Freddie Mercury, Roger Taylor a
 ggplotly(KeysPlot, tooltip = "text")
 ```
 ***
+
+*(Still have to write a conclusion.)*
+
 **Numbers of Tracks per Artist**  
 `r NTracks %>% knitr::kable()`
 
@@ -1690,7 +1697,7 @@ In this dendrogram you can find all 25 tracks by Freddie Mercury I put in the pl
 *Brighton Rock* looks a bit like an outlier, as well as *Procession* (both . But overall, most Freddie Mercury songs are clustered together and the earlier Queen songs too. The oldest Queen songs are a bit mixed together with Freddie Mercury solo songs. 
 
 **Conclusion**  
-I have to write this.
+*(Still have to write this.)*
 
 
 Classification {.storyboard}
@@ -1846,8 +1853,8 @@ ggplotly(Plot, tooltip = "text")
 
 ***
 **Explanation**  
-The most important feature to tell Freddie Mercury apart from Queen is timbre level 4, which shows the difference between the beginning and end of .... Outside of the timbre features, loudness, danceability and speechiness were most important.
-...
+The most important feature to tell Freddie Mercury apart from Queen is timbre level 4, which shows the energy in attacks of sounds. Outside of the timbre features, loudness, danceability and speechiness were most important.
+*(Still have to write a conclusion.)*
 
 
 ### Classifying Queen after the death of Freddie Mercury is much harder. 
@@ -1951,7 +1958,8 @@ comp_knn |> get_conf_mat() |> autoplot(type = "heatmap")
 
 ***
 **Explanation**  
-I also wanted to know whether Roger Taylor could be as easily classified as Freddie Mercury and the band. Once again, Freddie Mercury was classified very well and the same holds for early Queen. Later Queen and Roger Taylor were a little less accurately classified, but not nearly as bad as Queen after the death of the singer. The few songs that were released in honor of Freddie Mercury have more in common with the solo songs by both Freddie Mercury and Roger Taylor than the songs by Queen as a band. ...
+I also wanted to know whether Roger Taylor could be as easily classified as Freddie Mercury and the band. Once again, Freddie Mercury was classified very well and the same holds for early Queen. Later Queen and Roger Taylor were a little less accurately classified, but not nearly as bad as Queen after the death of the singer. The few songs that were released in honor of Freddie Mercury have more in common with the solo songs by both Freddie Mercury and Roger Taylor than the songs by Queen as a band. 
+*(Still have to give the accuracy score.)*
 
 
 ### Plot
@@ -2001,10 +2009,10 @@ ggplotly(Plot, tooltip = "text")
 
 ***
 **Explanation**  
-In terms of timbre, the groups are quite distinguishable as you can see in the plot and in the former tab. What this exactly means is very hard to say. 
+In terms of timbre, the groups are quite distinguishable as you can see in the plot and in the former tab. As I have mentioned before, what this exactly means is very hard to say as timbre is very abstract. Spotify uses 12 different components to calculate timbre, which get more abstract the higher the level. Therefore, you can probably imagine that timbre component 9 is very incomprehensible, in fact, there is not even a description of it. 
 
 **Conclusion**  
-Will write this.
+*(Still have to write this.)*
 
 
 Conclusion {data-icon="ion-android-bulb"}
