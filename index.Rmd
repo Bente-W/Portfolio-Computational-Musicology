@@ -52,8 +52,7 @@ library(compmus)
 ## will give errors
 ```
 
-
-Introduction {data-icon="ion-ios-home-outline"}
+Introduction {data-icon="ion-ios-home-outline" data-orientation=columns}
 =========================================
 
 Column {data-width=600}
@@ -67,17 +66,17 @@ Although I am not a '70s kid, Queen is very nostalgic to me. I remember sitting 
 Therefore, I will be comparing solo songs by Freddie Mercury with the songs from the band Queen. In addition to that, I will take a look at the solo songs by Roger Taylor as he was the first to go solo. There will also be some comparisons between Queen with Freddie Mercury as lead singer, and after the singer's death.
 
 **Expectations**  
-The band Queen is known for their grandiosity and experimentation. They were not afraid to deviate from the norm and tried to mix all kinds of genres together in their songs including rock, pop, metal, opera and electronic music. It is therefore very difficult to pinpoint the characteristics of Queen and to select typical songs. However, many songs seem to be theatrical or dramatic featuring intricate arrangements and harmonies, the lyrics have a message and explore complex themes, and the songs are pushing boundaries of rock music. These qualities can be clearly heard in what may be the most famous Queen song [Bohemian Rhapsody](https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv?si=16ec60afbe5e4102), which includes the complex harmonies and shifts between different genres such as rock, pop and opera. It also beautifully displays Freddie Mercury's impressive range and theatrical feeling.
+The band Queen is known for their grandiosity and experimentation. They were not afraid to deviate from the norm and tried to mix all kinds of genres together in their songs including rock, pop, metal, opera and electronic music. It is therefore very difficult to pinpoint the characteristics of Queen and to select typical songs. However, many songs seem to be theatrical or dramatic featuring intricate arrangements and harmonies, the lyrics have a message and explore complex themes, and the songs are pushing boundaries of rock music. These qualities can be clearly heard in what may be the most famous Queen song: [Bohemian Rhapsody](https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv?si=16ec60afbe5e4102), which includes the complex harmonies and shifts between different genres such as rock, pop and opera. It also beautifully displays Freddie Mercury's impressive vocal range and theatrical feeling.
 
 Needless to say, these iconic vocals can also be heard in the solo songs released by Freddie Mercury. He did seem to enjoy Disco music more than the other band members. Disco music is known for its great danceability. Therefore, the genre of disco music is characterized by a strong and steady beat, often resulting in a 4/4 time signature. To add more interest and to give songs more energy, guitar bass lines and drum hi-hats frequently contained syncopated rhythms. Disco music also uses a lot of different instruments and has repetitive but funky and soulful vocals. The classic disco beat can be heard for example in the songs [Love Kills](https://open.spotify.com/track/1cApo5IeHOea0dD3Cs3QMB?si=da3d27a25d344081), [Living on My Own](https://open.spotify.com/track/6cNTGVmP2CzJpLQ01QIaD0?si=63261b0fc1364d5f) and [I Was Born to Love You](https://open.spotify.com/track/14FAtIQZsRYeu8zVI33l7f?si=22236162e3fe4664) on his album Mr. Bad Guy. [Your Kind of Lover](https://open.spotify.com/track/2jzS0f1C4af20OavmCodWQ?si=f9879e78d4434b00) from the same album also includes a typical disco bassline.  
 In addition to disco, opera is also a common genre in the songs released by Freddie Mercury. Together with opera singer Montserrat Caballé he has brought out an album, from which the like-named song [Barcelona](https://open.spotify.com/track/3BdId1EhcMX7yAzwzQJLAD?si=687c01b1ffe546e4) is most famous. These partially operatic songs will differ from the Queen songs in genre and pitch.  
-Since Freddie Mercury was the chief songwriter of the band Queen, I expect lots of similarities in the songwriting such as catchy hooks and melodies, but I also anticipate Queen having more complex and grandiose songs while Freddie Mercury will probably be more stripped down and focused on vocals, piano and danceability.
+Since Freddie Mercury was the chief songwriter of the band Queen, I also expect lots of similarities, such as catchy hooks and melodies. On the other hand, I anticipate Queen having more complex and grandiose songs while Freddie Mercury will probably be more stripped down and focused on vocals, piano and danceability.
 
 **Representation**  
-I have tried to make as complete a list as possible of the solo songs by Freddie Mercury. Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*). I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury (N = 25) in comparison to songs by the band Queen (N = 159).
-Regarding the band, I have made a playlist with all albums going from 1973 till 1995. Each Queen song is remastered in 2011, while Spotify only states that [In My Defence](https://open.spotify.com/track/04L5RyQCKOerOiBCjhT66T?si=08106363d5cc4a0b) by Freddie Mercury is remixed in 2000. In *Song list 2.1* there are a few songs that stand out in the discography of Queen. In addition to these songs, the [tracks before *Killer Queen* was released](https://open.spotify.com/playlist/0Fgo3pP9bCEeamaSwYwIhQ) sound less clear than all songs that come after due to reverb on the vocals and guitar.
+I have tried to make as complete a list as possible of the solo songs by Freddie Mercury. Nevertheless, there are a few non-original songs from the two albums he has released (*Mr. Bad Guy* and *Barcelona*) because those songs only are on Spotify as special editions (listed in *Song list 1.1*) or new orchestrated editions (listed in *Song list 1.2*). From what I can hear, those non-original editions are mostly just better mixed than the original songs. So, I have decided to include the songs to have a bigger set of data since there already are much fewer solo songs by Freddie Mercury (N = 25) in comparison to songs by the band Queen (N = 159).
+Regarding the band, I have made a playlist with all albums going from 1973 till 1995. Each Queen song is remastered in 2011, while Spotify only states that [In My Defence](https://open.spotify.com/track/04L5RyQCKOerOiBCjhT66T?si=08106363d5cc4a0b) by Freddie Mercury is remixed in 2000. In *Song list 2.1* I have listed just a few songs that stand out in the discography of Queen in my opinion. In addition to these songs, the [tracks before *Killer Queen* was released](https://open.spotify.com/playlist/0Fgo3pP9bCEeamaSwYwIhQ) sound less clear than all songs that come after due to reverb on the vocals and guitar.
 
-In addition, I have created a small playlist (N = 13) with the songs that were released by the band after the death of Freddie Mercury so I can investigate how Freddie Mercury's death affected the band. This playlist contains one track called [Yeah](https://open.spotify.com/track/65YeIE3Y4YBNLnXcpVZz1P?si=66ae769c6997402d) which is precisely what the title suggests: namely 4 seconds of Freddie Mercury singing "Yeah".
+Besides those two playlists, I have created a small playlist (N = 13) with the songs that were released by the band after the death of Freddie Mercury so I can investigate how Freddie Mercury's death affected the band. This playlist contains one track called [Yeah](https://open.spotify.com/track/65YeIE3Y4YBNLnXcpVZz1P?si=66ae769c6997402d) which is precisely what the title suggests: namely 4 seconds of Freddie Mercury singing "Yeah".
 
 The playlist of songs by Roger Taylor consists of 44 songs from four different albums. 
 
@@ -97,11 +96,11 @@ The playlist of songs by Roger Taylor consists of 44 songs from four different a
 
 *Song list 2.1: Outliers Queen*
 
-  - Ming's Theme
-  - The Ring
-  - The Hitman
-  - Ogre Battle
-  - '39
+  - Ming's Theme (track for a movie)
+  - The Ring (track for a movie)
+  - The Hitman (typical hard rock song, not as innovative as Queen normally is)
+  - Ogre Battle (hard rock song with hints of heavy metal, more intense but also with a fantasy theme)
+  - '39 (folk-influenced rock song, lots of acoustic sounds; written by Brian May)
 
 Column {data-width=200}
 -------------------------------------
@@ -255,6 +254,8 @@ options(digits = 3)
 
 # my playlists
 logo <- list.files("/Users/gebruiker/Documents/Studies/CLC/Jaar 2 2022-2023/Computational Musicology/Portfolio-Comp-Musicology", pattern = ".png", full.names = TRUE)
+photo <- list.files("/Users/gebruiker/Documents/Studies/CLC/Jaar 2 2022-2023/Computational Musicology/Portfolio-Comp-Musicology", pattern = ".jpg", full.names = TRUE)
+
 freddie <- get_playlist_audio_features('', '7IXPxFygCKwBEklOVopUu8') %>%
   mutate(
     track.album.release_date =
@@ -544,8 +545,10 @@ I was curious about the emotion every song portrays. Freddie Mercury has once sa
 **Explanation**  
 There seem to be very few peaceful and calm pieces, which corresponds to the characteristics of the band. The only songs that are in this category are from the band with Freddie Mercury as lead singer. After the death of the singer, there seems to be a slight shift towards sad and angry songs. Roger Taylor has more turbulent songs, while Freddie Mercury also has quite a few sad songs. 
 
+**Note**  
+The plot can be a little seem a little overwhelming and cluttered, but you can filter artists out by clicking on them in the legend or even isolate them by double tapping them.
 
-### Timbre features {data-commentary-width=500}
+### Timbre features reveal the difference between old and new Queen songs. {data-commentary-width=500}
 ```{r}
 freddie <-
   get_playlist_audio_features(
@@ -601,7 +604,8 @@ comp |>
 For every 12 levels of timbre used by Spotify API I have plotted the range for the songs by Freddie Mercury, the oldest songs by Queen (released around the year 1973) and the newest songs with Freddie Mercury still as lead singer (released around the year 1990). 
 
 According to the clusters, some of the timbre levels should be very distinct between the three categories I plotted. For example, from most useful to less useful, the levels 4, 12, 3 and 1 should be quite different. Unfortunately, timbre is a very abstract term to talk about music. According to Jehan (2014) timbre "is the quality of a musical note or sound that distinguishes different types of musical instruments, or voices." Spotify uses 12 different levels to quantify timbre, the first of which is easy to understand, but that goes down very quickly. Level 1 represents the average loudness of a section and the second level calculates the difference in energy between lower and higher frequencies (this should represent the brightness, which is already much less concrete). The next dimension does this for the mid-frequencies (which should correlate to the flatness of the sound) and the fourth represents the energy of the attacks (the beginning of sounds).  
-*(I still have to write a conclusion.)*
+
+As I have already said in the introduction, the first few songs sound less clear than all songs that come after due to reverb on the vocals and guitar. I think this relates to the brightness, flatness and attack of the tracks, which as you can see, all seem to differ quite a bit between the first 25 songs and the last 25 songs of Queen. Specially the fourth dimension, where the old songs have range much lower than both the older songs and Freddie Mercury songs. Freddie Mercury songs seem to have more overlap with the older songs except for the second dimension. I think the songs by Freddie Mercury have a huge range in this dimension because of the operatic songs that have more energy in higher frequencies and the electronic songs that have more energy in lower frequencies.
 
 **Reference**  
 Jehan, T., DesRoches, D. (2014). Analyzer documentation (analyzer version 3.2). Accessed 27 Mar. 2023
@@ -1377,6 +1381,9 @@ RhapsodyChordPlot <- rhapsody |>
     aes(x = start + duration / 2, width = duration, y = name, fill = d)
   ) +
   geom_tile() +
+  geom_vline(xintercept = 182, color = "#B6231B", linewidth = 0.6) +
+  geom_vline(xintercept = 247, color = "#B6231B", linewidth = 0.6) +
+  geom_vline(xintercept = 290, color = "#B6231B", linewidth = 0.6) +
   scale_fill_viridis_c(guide = "none") +
   theme_minimal() +
   labs(title = "Bohemian Rhapsody - Queen", x = "Time (s)", y = "")
@@ -1385,20 +1392,20 @@ grid.arrange(TimePlot, LovePlot, ncol = 1)
 ```
 
 ***
-*(I have to shorten this explanation)*  
 **Chordogram**  
 These chordograms show the similarity for every bar of a song with certain chords. The more similar the bar is to that specific chord, the darker the color in the graph. When you see bright yellow, it is very unlikely that chords was played in that bar. 
 
 The two songs are, in my opinion, quite similar in style. Both ballads have intricate piano arrangements and are a little more stripped down compared to the rest of the discography. That is why I thought it would be interesting to see how the chordograms compared to one another. 
 
 **Time Waits for No One**  
-Even though the plot looks quite clear, it is still harder to get all the right chords since Freddie Mercury composed a complex piano arrangement that has multiple chords (and definitely not only simple triads or triads with the added 7th note) in one bar. What makes it easier then *Love of My Life* is that he only uses the piano and his voice.
+Even though the plot looks quite clear, it is still harder to get all the right chords since Freddie Mercury composed a complex piano arrangement that has multiple chords (and definitely not only simple triads or triads with the added 7th note) in one bar. I think that the fact he only uses piano to accompany his vocals makes it seem easier to plot in a chordogram, however, the dark blue boxes are all over the place and not very accurate.
 
 **Love of My Life**  
-At first glance it looks a little messy to me. There are four very distinct yellow lines and some darker blue boxes. After listening to the song while taking a closer look at the graph I discovered that the start of the song was most clearest. The song starts with an instrumental introduction that ends with an arpeggio G major chord on the harp which can also be seen by the dark blue box at 20 seconds. When Freddie Mercury starts singing (after the arpeggio) the accompanying chords are C, Am, Dm, G and then C, F, Dm, Am, B♭m, F which I could also find in the figure. However, after the first yellow line, which can be explained by the piano riff that is played, the plot gets a little more muddy. There is another instrumental bit that focuses more on melody than on triads and the second yellow line is created by the waling bass line. At around 1 minute and 47 seconds, the third yellow line, there is a guitar riff preceded by piano riffs with walking bass lines. From 2 minutes and 20 seconds you can hear a guitar solo. At 2:27 (fourth yellow line) there is one sustained guitar note (with some piano notes accompanying). After 193 seconds there is another arpeggio that results in a dark blue box on F major.
+At first glance it looks a little messy to me, but after listening to the song and having a closer look at the plot I came to the conclusion that the plot accurately shows that the song makes use of only a few chords and I discovered that the start of the song was the clearest.
+The song starts with an instrumental introduction that ends with an arpeggio G major chord on the harp which can also be seen by the dark blue box at 20 seconds. When Freddie Mercury starts singing (after the arpeggio) the accompanying chords are C, Am, Dm, G and then C, F, Dm, Am, B♭m, F which I could also find in the figure. However, after the first yellow line, which can be explained by the piano riff that is played, the plot gets a little more muddy. There is another instrumental bit that focuses more on melody than on triads and the second yellow line is created by the walking bass line. At around 1 minute and 47 seconds, the third yellow line, there is a guitar riff preceded by piano riffs with walking bass lines. From 2 minutes and 20 seconds you can hear a guitar solo. At 2:27 (fourth yellow line) there is one sustained guitar note (with some piano notes accompanying). After 193 seconds there is another arpeggio that results in a dark blue box on F major.
 
 **Comparison**  
-There are four very bright lines in the Queen plot, which could explain why the rest of the figure is less saturated. But after taking a listening closely to the song, those parts did not stand out too much in my opinion. Another explanation could be, and I think is therefore more likely, that the song by Freddie Mercury is less complicated than the Queen song.
+Overall, I think that *Love of My Life* seemed a little harder to plot in a chordogram because of the instrumentation, but was in the end more accurate than *Time Waits for No One* because there are less different chords in one bar. 
 
 ### Electronic disco song *Let's Turn it On* by Freddie Mercury leaves weird pattern on all 7 chords. {data-commentary-width=450}
 
@@ -1411,6 +1418,11 @@ TurnPlot
 **Explanation**  
 I think it is interesting to see that in this very electronic song, there is not a clear pattern in the chords, whereas in the former two figures there was some sort of dark blue path throughout the plots. All chords that include the 7 have a darker blue line across the entire plot, which is explainable by the way pitches are constructed. 
 
+This song from the 85's was released on his solo album *Mr. Bad Guy* and is just like the four songs in the tempograms a high-energy disco track with a prominent bassline, synth-heavy instrumentation, and Mercury's signature vocals. Though there seems to be not much going on harmony wise, Freddie Mercury still has managed to make the song very interesting through syncopation and layers of synths, guitar, and percussion.
+
+<iframe src="https://open.spotify.com/embed/playlist/0C5rEeOSSA2feSGNRoLAC7?utm_source=generator" width="100%" height="85" frameBorder="0" allowtransparency="true" allow="encrypted-media" data-external="1"></iframe>
+
+
 ### Chordogram of *Bohemian Rhapsody*. {data-commentary-width=450}
 
 ```{r}
@@ -1420,10 +1432,10 @@ RhapsodyChordPlot
 ***
 
 **Explanation**  
-Since *Bohemian Rhapsody* is such a complex song, I wondered what it would look like in a chordogram. I will also still take a look at it in more detail.
+Since *Bohemian Rhapsody* is such a complex song, I wondered what it would look like in a chordogram. There are not many chords with high energy and there is definitely not a clear pattern as was the case with the first two plots. But I am able to see some of the structure of the song in the plot. The song starts with the vocal arrangements and where the bright yellow lines are visible, the bass comes in. After that there is a slight change where the operatic part begins. Interestingly, when they transition to the rock part, there is not as much of a change in the graph. The outro looks much more like the intro as this part is once again much more stripped down mainly focusing on vocals and a piano arrangement. 
 
 **Conclusion**  
-*(Still have to write this.)*
+I think there are mainly two styles Freddie Mercury went for in his solo career: either focusing on elaborate arrangements, in the piano or in vocal harmonies, or giving more of a disco feel by using a steady beat and electronic sounds in the harmonies. Queen as a band naturally made arrangements that highlighted all of the members and their instruments. Which might be an explanation why *Love of My Life* has a little less of an intricate piano arrangement and was thus more accurately plotted in the chordogram than *Time Waits for No One*. 
 
 Keys {.storyboard}
 =========================================
@@ -1431,11 +1443,26 @@ Keys {.storyboard}
 ### After the death of Freddie Mercury the band released most songs in G major, just like Freddie Mercury in his solo career.
 ```{r}
 KeysRatio <- Comparison2 %>%
-  group_by(category, key_mode) %>%
+  group_by(category, key_mode, .drop = FALSE) %>%
   summarise(n = n()) %>%
   mutate(freq = n / sum(n)) %>%
   ungroup()
-KeysPlotRatio <- ggplot(KeysRatio, aes(key_mode, freq, fill = category, text = paste("Artist: ", category, "<br>",
+
+Keys_order <- 
+  KeysRatio %>% 
+  filter(category == "Band (Queen)") %>% 
+  arrange(desc(n)) %>% 
+  mutate(key_mode = factor(key_mode))
+
+ExtraKeys <- data.frame (category = "Band (Queen)", key_mode  = c("A# minor","F# minor", "G# minor"),
+                  n = c(0, 0, 0), freq = c(0, 0, 0)
+                  )
+
+Keys_order <- rbind(Keys_order, ExtraKeys)
+
+KeysPlotRatio <- KeysRatio %>% 
+  mutate(key_mode = factor(key_mode, levels = Keys_order$key_mode, ordered = TRUE)) %>% 
+  ggplot(aes(key_mode, freq, fill = category, text = paste("Artist: ", category, "<br>",
                           "Key: ", key_mode, "<br>",
                           "Percentage: ", freq, "<br>",
                           "Actual frequency:", n))) +
@@ -1483,9 +1510,9 @@ NTracks <- Comparison2 %>% group_by(category) %>% summarise(Tracks = n()) %>% re
 **Explanation**  
 Here you can see the distribution of keys for every artist. In the next tab you can see the actual amounts (which can also be seen in if you hover over the points), but as there is such a difference in playlist length (see the table), I have chosen to first plot the ratio.
 
-Interestingly, the key G major was very loved by Freddie Mercury, Roger Taylor and the band after the death of the lead singer. Nevertheless, before that, the band used the key D major the most frequent.
+Interestingly, the key G major was very loved by Freddie Mercury, Roger Taylor and the band after the death of the lead singer. When Freddie Mercury was still in the band, the key D major the most frequent. And overall, Queen seemed to use more major keys than minor keys. After all their music often has a uplifting and joyful feeling which generally goes hand in hand with a major key.
 
-**Numbers of Tracks per Artist**  
+**Number of Tracks per Artist**  
 `r NTracks %>% knitr::kable()`
 
 ### Distribution of keys for every song in actual amounts.
@@ -1493,8 +1520,6 @@ Interestingly, the key G major was very loved by Freddie Mercury, Roger Taylor a
 ggplotly(KeysPlot, tooltip = "text")
 ```
 ***
-
-*(Still have to write a conclusion.)*
 
 **Numbers of Tracks per Artist**  
 `r NTracks %>% knitr::kable()`
@@ -1596,7 +1621,7 @@ treeFreddieColor
 In a dendrogram, items that are the most similar get clustered together. The longer the paths and thus the further the connection, the less similar the items or clusters are. I have used all features that are within the Spotify API to cluster Freddie Mercury's solo songs.
 
 **Freddie Mercury**  
-I like how you can see the more classical songs, the electronic disco songs and the remaining songs clustered. Each album seems to have their own distinct sound. [She Blows Hot and Cold](https://open.spotify.com/track/6I3giXXPjsOXDWz5CF2q2D?si=686476eb612f46bf) stands out, it is kind of the only outlier. It is much more generic pop-rock and definitely not like the electronic songs on the *Mr. Bad Guy* album. The song [In my Defence](https://open.spotify.com/track/04L5RyQCKOerOiBCjhT66T?si=75047a0784bb4326) was not written by Freddie Mercury. Dave Clark wrote it for the musical Time but the song still suits the singer very well. I am not surprised it was clustered together with the song [Made in Heaven](https://open.spotify.com/track/54duq94ybKaMCB5Fj2UciX?si=b4d1a06b16054667), as this is as much of a grand, theatrical and powerful song. 
+I like how you can see the more classical songs, the electronic disco songs and the remaining songs clustered. Both albums seem to have pretty much their own distinct sound. Except for the song [Mr. Bad Guy](https://open.spotify.com/track/6BZuf8iLTI18rN8L8WarzL?si=6fe7ce416bd34dd4) which includes lots of orchestral instruments and therefore gets clustered together with two more classical songs from the *Barcelona* album. [She Blows Hot and Cold](https://open.spotify.com/track/6I3giXXPjsOXDWz5CF2q2D?si=686476eb612f46bf) stands out, it is kind of the only outlier. It is much more generic pop-rock and definitely not like the electronic songs on the *Mr. Bad Guy* album. The song [In my Defence](https://open.spotify.com/track/04L5RyQCKOerOiBCjhT66T?si=75047a0784bb4326) was not written by Freddie Mercury. Dave Clark wrote it for the musical Time but the song still suits the singer very well. I am not surprised it was clustered together with the song [Made in Heaven](https://open.spotify.com/track/54duq94ybKaMCB5Fj2UciX?si=b4d1a06b16054667), as this is as much of a grand, theatrical and powerful song. 
 
 **Queen and Roger Taylor**  
 I have also checked the clusters of Roger Taylor and Queen - because of the big amount of tracks, both are very cluttered and thus I decided not to include them - which had much less clear clusters than the dendrogram of Freddie Mercury. However, one album by Queen very much stood out; *Flash Gordon* was almost completely isolated from the rest of the tracks. The two most similar songs by Queen were *These are the Days of our Lives* and
@@ -1694,18 +1719,34 @@ treeCompColor
 **Explanation**  
 In this dendrogram you can find all 25 tracks by Freddie Mercury I put in the playlist compared to the first and last 25 songs by Queen using all the features Spotify API has to offer. 
 
-*Brighton Rock* looks a bit like an outlier, as well as *Procession* (both . But overall, most Freddie Mercury songs are clustered together and the earlier Queen songs too. The oldest Queen songs are a bit mixed together with Freddie Mercury solo songs. 
+*Brighton Rock* looks a bit like an outlier, as well as *Procession* (both have rather long branches), which are two songs from Queen in the early days. You will see on the next page how *Procession* is very different from the rest loudness wise. *Brighton Rock* tells a story about two lovers who meet in Brighton. If you listen to the song you can hear how they wander across the street on a national holiday, while street musicians are playing. The excitement but also rebellion are portrayed by the energetic guitar riffs that Brian May was able to play.
 
 **Conclusion**  
-*(Still have to write this.)*
+Overall, most Freddie Mercury songs are clustered together and the earlier Queen songs too. The oldest Queen songs are a bit mixed together with Freddie Mercury solo songs. 
 
 
 Classification {.storyboard}
 =========================================
 
-### Telling Freddie Mercury apart from Queen is not very hard. 
+### Telling Freddie Mercury apart from Queen is not very hard. {data-commentary-width=450}
 
 ```{r}
+get_conf_mat <- function(fit) {
+  outcome <- .get_tune_outcome_names(fit)
+  fit |> 
+    collect_predictions() |> 
+    conf_mat(truth = outcome, estimate = .pred_class)
+}  
+
+get_pr <- function(fit) {
+  fit |> 
+    conf_mat_resampled() |> 
+    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |> 
+    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |> 
+    ungroup() |> filter(Prediction == Truth) |> 
+    select(class = Prediction, precision, recall)
+} 
+
 # classifier
 freddie <- get_playlist_audio_features("spotify", "7IXPxFygCKwBEklOVopUu8")
 queen <- get_playlist_audio_features("spotify", "3FOkKYT1wXXJH8L2lcSP5t")
@@ -1743,6 +1784,49 @@ comp_features <-
   mutate_at(vars(pitches, timbre), map, bind_rows) |>
   unnest(cols = c(pitches, timbre))
 
+knn_model <-
+  nearest_neighbor(neighbors = 1) |>
+  set_mode("classification") |> 
+  set_engine("kknn")
+
+# All the features
+compAll_recipe <-
+  recipe(
+    artist ~
+      danceability +
+      energy +
+      loudness +
+      speechiness +
+      acousticness +
+      instrumentalness +
+      liveness +
+      valence +
+      tempo +
+      duration +
+      C + `C#|Db` + D + `D#|Eb` +
+      E + `F` + `F#|Gb` + G +
+      `G#|Ab` + A + `A#|Bb` + B +
+      c01 + c02 + c03 + c04 + c05 + c06 +
+      c07 + c08 + c09 + c10 + c11 + c12,
+    data = comp_features           # Use the same name as the previous block.
+  ) |>
+  step_center(all_predictors()) |>
+  step_scale(all_predictors())      # Converts to z-scores.
+  # step_range(all_predictors())    # Sets range to [0, 1].
+
+compAll_cv <- comp_features |> vfold_cv(5)
+
+compAll_knn <- 
+  workflow() |> 
+  add_recipe(compAll_recipe) |> 
+  add_model(knn_model) |> 
+  fit_resamples(compAll_cv, control = control_resamples(save_pred = TRUE))
+
+ConfMatAll <- compAll_knn |> get_conf_mat()
+AllHeatmap <- compAll_knn |> get_conf_mat() |> autoplot(type = "heatmap")
+
+AllPrecision <- compAll_knn |> get_pr()
+
 comp_recipe <-
   recipe(
     artist ~
@@ -1755,6 +1839,7 @@ comp_recipe <-
       #liveness +
       #valence +
       #tempo +
+      c04 +
       duration,
       #C + `C#|Db` + D + `D#|Eb` +
       #E + `F` + `F#|Gb` + G +
@@ -1769,43 +1854,36 @@ comp_recipe <-
 
 comp_cv <- comp_features |> vfold_cv(5)
 
-knn_model <-
-  nearest_neighbor(neighbors = 1) |>
-  set_mode("classification") |> 
-  set_engine("kknn")
 comp_knn <- 
   workflow() |> 
   add_recipe(comp_recipe) |> 
   add_model(knn_model) |> 
   fit_resamples(comp_cv, control = control_resamples(save_pred = TRUE))
 
-get_conf_mat <- function(fit) {
-  outcome <- .get_tune_outcome_names(fit)
-  fit |> 
-    collect_predictions() |> 
-    conf_mat(truth = outcome, estimate = .pred_class)
-}  
-
-get_pr <- function(fit) {
-  fit |> 
-    conf_mat_resampled() |> 
-    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |> 
-    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |> 
-    ungroup() |> filter(Prediction == Truth) |> 
-    select(class = Prediction, precision, recall)
-} 
-
-#comp_knn |> get_conf_mat()
+ConfMat <- comp_knn |> get_conf_mat()
 comp_knn |> get_conf_mat() |> autoplot(type = "heatmap")
+
+Precision <- comp_knn |> get_pr()
 
 ```
 
 ***
 **Confidence matrix**  
-Based on the features danceability, energy, loudness, speechiness and duration, the computer tried to make a model to predict whether a song was by Freddie Mercury, early Queen or late Queen. These features were the most important besides some timbre features. I once again put in all 25 songs by Freddie Mercury and the first and last 25 songs by Queen. Here you can see how well the model did; the number in the cells show for every combination (the three true categories and how the three categories were predicted) how often this was the case. For example, for every song by Freddie Mercury, the model predicted 20 times correctly and only once that is was an early Queen song and four times that is was a late Queen song. Classifying Freddie Mercury seems to be the easiest. But both the earliest and latest songs by Queen were apparently also not too hard to classify, since the model predicted most songs right. This could also be expected based on how the dendrogram on the previous page already seemed to cluster most of the songs by artist somewhat right. 
+Based on the features danceability, energy, loudness, speechiness, duration and timbre component 4, I made a model to predict whether a song was by Freddie Mercury, early Queen or late Queen. These features were the most important besides some other timbre features. I once again put in all 25 songs by Freddie Mercury and the first and last 25 songs by Queen. Here you can see how well the model did; the number in the cells show for every combination (the three true categories and how the three categories were predicted) how often this was the case. For example, the first value (upper left corner) shows the number of times the model predicted correctly that a song was by Freddie Mercury, the value immediately below shows for every Freddie Mercury song number of times it predicted it was an early Queen song and underneath that the times that it predicted it as a late Queen song. Classifying Freddie Mercury seems to be the easiest. But both the earliest and latest songs by Queen were apparently also not too hard to classify, since the model predicted most songs right. This could also be expected based on how the dendrogram on the previous page already seemed to cluster most of the songs by artist somewhat right. 
 
+**Evaluation model using all features**  
+```{r}
+AllPrecision %>% knitr::kable()
+```
 
-### Plot
+**Evaluation model using most important features**  
+```{r}
+Precision %>% knitr::kable()
+```
+
+Precision is the proportion of accurately predicted songs from all songs the model predicted to be from that artist. Recall shows from all songs that are actually from that artist the proportion that got predicted accurately. As you can see, the model using only the most important features has both higher and lower values and thus does not necessarily perform better than the model using all features Spotify API has to offer.
+
+### Earlier Queen songs lack sharpness and Freddie Mercury songs are less loud. {data-commentary-width=450}
 
 ```{r}
 library(ranger)
@@ -1836,7 +1914,13 @@ features <- workflow() |>
   labs(x = NULL, y = "Importance")
 
 Plot <- comp_features |>
-  ggplot(aes(x = c04, y = loudness, colour = artist, size = danceability, text = track.name, alpha = speechiness)) +
+  ggplot(aes(x = c04, y = loudness, colour = artist, size = danceability, alpha = speechiness, text = paste("Track: ", track.name, "<br>",
+                          "Artist: ", artist, "<br>",
+                          "Release date: ", track.album.release_date, "<br>",
+                          "Timbre component 4: ", c04, "<br>",
+                          "Loudness: ", loudness, "<br>",
+                          "Danceability: ", danceability, "<br>",
+                          "Speechiness: ", speechiness))) +
   geom_point(alpha = 0.8) +
   scale_color_viridis_d() +
   labs(
@@ -1853,11 +1937,14 @@ ggplotly(Plot, tooltip = "text")
 
 ***
 **Explanation**  
-The most important feature to tell Freddie Mercury apart from Queen is timbre level 4, which shows the energy in attacks of sounds. Outside of the timbre features, loudness, danceability and speechiness were most important.
-*(Still have to write a conclusion.)*
+The most important feature to tell Freddie Mercury apart from Queen is timbre level 4, which shows the energy in attacks of sounds which might translate in more abstract words to the sharpness of sounds. Outside of the timbre features, loudness, danceability and speechiness were most important.
+
+Once again, the first few songs definitely sound different from the older songs and from Freddie Mercury songs in terms of clearness. The older songs sound a little more muffled and have more reverb on the vocals and guitar. However, when I listened to the songs with the highest and lowest value on timbre component 4, I noticed that the higher the value, the more kick there was in the song and specially in the beat. In other words, [My Baby Does Me](https://open.spotify.com/track/4ThbgbCyLKCPrPEdmYfwtV?si=ca95d1b347624650 ) has a very strong beat with a sharp and high energy snare. When listening to [Some Day One Day](https://open.spotify.com/track/520tzZUTVcjEmxiTjYNj7y?si=80880db4066b4771) which according to the plot has the lowest value on timbre component 4, I heard that all sounds have the same energy. There is no sharp beat and it does sound a bit flat and lacks dynamics. 
+
+The song [Procession](https://open.spotify.com/track/3T0wVh9SHCwI0NtMoqPnbm?si=850ce28faea8437a) by Queen has the lowest energy and that is very noticeable if you listen to the track. It starts with simply a soft beat and after that only features a guitar that sounds a bit in the distance. This might also be because the track is heavily panned to the left at the beginning and to the right from the second half.
 
 
-### Classifying Queen after the death of Freddie Mercury is much harder. 
+### Classifying Queen after the death of Freddie Mercury is much harder. {data-commentary-width=450}
 
 ```{r}
 # classifier
@@ -1935,34 +2022,23 @@ comp_knn <-
   add_model(knn_model) |> 
   fit_resamples(comp_cv, control = control_resamples(save_pred = TRUE))
 
-get_conf_mat <- function(fit) {
-  outcome <- .get_tune_outcome_names(fit)
-  fit |> 
-    collect_predictions() |> 
-    conf_mat(truth = outcome, estimate = .pred_class)
-}  
-
-get_pr <- function(fit) {
-  fit |> 
-    conf_mat_resampled() |> 
-    group_by(Prediction) |> mutate(precision = Freq / sum(Freq)) |> 
-    group_by(Truth) |> mutate(recall = Freq / sum(Freq)) |> 
-    ungroup() |> filter(Prediction == Truth) |> 
-    select(class = Prediction, precision, recall)
-} 
-
 #comp_knn |> get_conf_mat()
 comp_knn |> get_conf_mat() |> autoplot(type = "heatmap")
+Precision2 <- comp_knn |> get_pr()
 
 ```
 
 ***
 **Explanation**  
 I also wanted to know whether Roger Taylor could be as easily classified as Freddie Mercury and the band. Once again, Freddie Mercury was classified very well and the same holds for early Queen. Later Queen and Roger Taylor were a little less accurately classified, but not nearly as bad as Queen after the death of the singer. The few songs that were released in honor of Freddie Mercury have more in common with the solo songs by both Freddie Mercury and Roger Taylor than the songs by Queen as a band. 
-*(Still have to give the accuracy score.)*
+
+**Evaluation model using all features**  
+```{r}
+Precision2 %>% knitr::kable()
+```
 
 
-### Plot
+### Are Roger Taylor's songs less intense than Queen songs? Have a listen! {data-commentary-width=450}
 
 ```{r}
 library(ranger)
@@ -1993,7 +2069,12 @@ features <- workflow() |>
   labs(x = NULL, y = "Importance")
 
 Plot <- comp_features |>
-  ggplot(aes(x = c09, y = c04, colour = artist, size = loudness, text = track.name)) +
+  ggplot(aes(x = c09, y = c04, colour = artist, size = loudness, text = paste("Track: ", track.name, "<br>",
+                          "Artist: ", artist, "<br>",
+                          "Release date: ", track.album.release_date, "<br>",
+                          "Timbre component 9: ", c09, "<br>",
+                          "Timbre component 4: ", c04, "<br>",
+                          "Loudness: ", loudness, "<br>"))) +
   geom_point(alpha = 0.8) +
   scale_color_viridis_d() +
   labs(
@@ -2006,32 +2087,45 @@ Plot <- comp_features |>
   theme_bw()
 ggplotly(Plot, tooltip = "text")
 ```
-
 ***
 **Explanation**  
-In terms of timbre, the groups are quite distinguishable as you can see in the plot and in the former tab. As I have mentioned before, what this exactly means is very hard to say as timbre is very abstract. Spotify uses 12 different components to calculate timbre, which get more abstract the higher the level. Therefore, you can probably imagine that timbre component 9 is very incomprehensible, in fact, there is not even a description of it. 
+In terms of timbre, the groups are quite distinguishable as you can see in the plot and in the former tab. As I have mentioned before, what this exactly means is very hard to say as timbre is very abstract. Spotify uses 12 different components to calculate timbre, which get more abstract the higher the level. Therefore, you can probably imagine that timbre component 9 is very incomprehensible, in fact, there is not even a description of it. I am not able to fully grasp how this timbre dimension works, as the song by Freddie Mercury with the highest value is [Guide me Home](https://open.spotify.com/track/0iNnvlm2yEcqKbXCbyu4lG?si=8bd14401c3554387), which is very much a classical song. While [The Hitman](https://open.spotify.com/track/3DTonaWjulk1qsxL7ULIax?si=1be729129f7543a3) and [Ogre Battle](https://open.spotify.com/track/6QnNTOzKfo4xzvF9J3LgVR?si=694b101b7b054bdd) are two of the most heavy songs by Queen that lean towards metal, and also have a high value. However, I do think that those songs are more intense in some way than the song with the lowest value [Magic is Loose](https://open.spotify.com/track/3AEABpwdwkB6vGLui5LY3M?si=b05e7cf9dbd14ac6) 
 
 **Conclusion**  
-*(Still have to write this.)*
+Even though I might not be able to hear a clear difference with regard to timbre component 9, the five categories seem have enough differences to be classified reasonably well. After the death of Freddie Mercury the band released one last album with demo's and ideas that Freddie Mercury recorded when he didn't have long to live. That some songs are classified as solo songs by Freddie Mercury is not surprising as the band members used unreleased work and songs from Freddie's solo career, which are infused with the signature sound of the band. You can read more on this (in Dutch) on the [Radio Veronica site](https://www.radioveronica.nl/entertainment/3x-het-verhaal-achter-de-plaat-made-in-heaven-van-queen).
 
 
-Conclusion {data-icon="ion-android-bulb"}
+Conclusion {data-icon="ion-android-bulb" data-orientation=rows}
 =========================================
 
-Column {data-width=400}
+Column {.sidebar data-width=650}
 -------------------------------------
-
 ### “I won’t be a rock star. I’ll be a legend.” - Freddie Mercury.
 
-`r knitr::include_graphics(logo)`
-
-Column {data-width=600}
--------------------------------------
-
-### A legend he is and here is why.
-
+**A legend he is and here is why**  
 I expected lots of similarities between the songs by Freddie Mercury and the band Queen; catchy hooks and melodies, dramatic and energetic vocal arrangements. But I also anticipated Queen having more complex and grandiose songs while Freddie Mercury's discography would probably be more stripped down and focused on vocals, piano and danceability.
 
 From the plots that I made we can see that there is a lot of overlap. Nevertheless, Queen has much more popular songs than Freddie Mercury as a solo artist, which are mostly upbeat, danceable and include lyrics. Queen incorporates complex harmonies within the high energy songs. Freddie Mercury's songs are also sophisticated but not all popular songs are also danceable. Both queen and Freddie Mercury in his solo career were trying to explore new styles and tried to step out of the box. While Queen did that even within a single song, Freddie Mercury did that more so across his different albums. In other words, opera, rock, pop and electronic music are all part of their styles, but Queen combined them all at once and one of their most popular songs is a great example of that, *Bohemian Rhapsody*. The singer separated them more; the disco music, with elements of electronic and synth-pop music can be found on his album *Mr. Bad Guy* and the theatrical, operatic and classical style with hints of pop and rock on the following album *Barcelona*. 
 
 Queen, of course, did not only consist of the singer Freddie Mercury. The other band members brought their own unique musical influences and perspectives to the creative processes. Songs by Roger Taylor for example were characterized by a more rock-oriented sound and clearer structure, with an emphasis on percussion. Brian May incorporated elements of country and folk music into the mix. Each member brought their own musical expertise and interests to the band, resulting in a diverse range of styles and sounds in their music. The collaborative nature of the band allowed for the integration of each member's musical ideas, ultimately leading to their distinctive sound and success as a group.
+
+Row {data-height=350}
+-------------------------------------
+
+### Thank you for reading!
+
+`r knitr::include_graphics(logo)`
+
+### Bohemian rhapsody
+
+```{r}
+valueBox("19 out of 24", caption = "Bohemian Rhapsody is very loved in the Netherlands. Every year the Dutch population can vote on the best songs of all times. The number 1 in Dutch Top 2000 has almost always been Queen. Click on this box to learn more about this.", icon = "ion-ios-musical-notes", href = "https://www.nporadio2.nl/top2000/statistieken/door-de-jaren-heen/queen/bohemian-rhapsody")
+```
+
+
+Row {data-height=750}
+-------------------------------------
+### [Source](https://www.queenonline.com/queen)
+
+`r knitr::include_graphics(photo)`
+
